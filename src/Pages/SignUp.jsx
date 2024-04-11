@@ -1,6 +1,7 @@
 import {React, useState} from "react";
 import logo from "../image/logo.png";
 import { Link } from "react-router-dom";
+import axios from "axios"
 
 
 
@@ -21,14 +22,15 @@ function SignUp() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm(formData);
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      // Form is valid, you can submit the data
       console.log("Form submitted:", formData);
     }
+    const result = await axios.post('/api/v1/users/register',formData)
+  alert('You are registered sucessfully')
   };
 
   const validateForm = (data) => {

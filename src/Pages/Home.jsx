@@ -1,5 +1,6 @@
 import React from "react";
-import background from "../image/background.jpg"
+import { Link } from "react-router-dom";
+
 function Home() {
   return (
     <div className="relative min-h-screen ">
@@ -12,7 +13,7 @@ function Home() {
         </span>
       </div>
       <div className="rounded-full bg-gradient-to-r via-purple-500 from-indigo-500 to-pink-500 ... p-[2px] hover:scale-110 mr-3 mt-7">
-            <button className="rounded-full font-bold bg-slate-700 px-8 py-2 text-white text-2xl">Upload</button>
+      <Link to={"/upload"} ><button className="rounded-full font-bold bg-slate-700 px-8 py-2 text-white text-2xl">Upload</button></Link>
           </div>
     </div>
     </div>
