@@ -49,10 +49,10 @@ function SignUp() {
     return errors;
   };
   return (
-    <div className="min-h-screen bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... flex items-center justify-center shrink lg:basis-1/2">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-600 flex items-center justify-center shrink lg:basis-1/2">
       <div className="w-full max-w-md">
         <div className="rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... p-[2px]">
-          <div className="  bg-black shadow-md rounded-2xl py-8 px-8 ">
+          <div className="  bg-slate-800 shadow-md rounded-2xl py-8 px-8 ">
             <h1 className="text-3xl font-semibold mb-4 text-white">Sign Up</h1>
             <p className="mb-6 text-white">Pleaase create your account</p>
             <form onSubmit={handleSubmit}>
