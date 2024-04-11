@@ -1,207 +1,134 @@
-import React from 'react'
-import guitar from "../image/guitar.jpg"
-import { Link } from 'react-router-dom'
+import {React, useState} from "react";
+import logo from "../image/logo.png";
+import { Link } from "react-router-dom";
+
+
 
 function SignUp() {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = validateForm(formData);
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      // Form is valid, you can submit the data
+      console.log("Form submitted:", formData);
+    }
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+    if (data.username.length < 3) {
+      errors.username = 'Username must be at least 3 characters long.';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      errors.email = 'Invalid email address.';
+    }
+    if (data.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters long.';
+    }
+    if (data.password !== data.confirmPassword) {
+      errors.confirmPassword = 'Passwords do not match.';
+    }
+    return errors;
+  };
   return (
-    <div>
-    <div className="flex justify-evenly bg-black">
-      <div className="min-h-screen bg-black flex items-center justify-center  lg:basis-1/2">
-        <div className="w-full max-w-md">
-          <div className="bg-black flex justify-center  p-10 ">
-            <div className="w-10 h-10 rounded-full bg-red-600"></div>
-            <div>
-              <p className="text-3xl font-bold ml-3 text-white">LEELOOP</p>
-            </div>
-          </div>
-          <div className="shadow-md rounded-lg py-8 px-8 border border-white-500">
-            <h1 className="text-3xl font-bold mb-4  text-white">Register</h1>
-            <form>
-              <div className="flex justify-around">
-                <div className="flex items-baseline ">
-                  <input type="radio" name="user" />
-                  <label
-                    htmlFor="ARTIST"
-                    className="block text-white font-bold mb-2 text-sm pl-2"
-                  >
-                    ARTIST
-                  </label>
-                </div>
-                <div className="flex items-baseline ">
-                  <input type="radio" name="user" />
-                  <label
-                    htmlFor="COMPANY"
-                    className="block text-white font-bold mb-2 text-sm pl-2"
-                  >
-                    COMPANY
-                  </label>
-                </div>
+    <div className="min-h-screen bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... flex items-center justify-center shrink lg:basis-1/2">
+      <div className="w-full max-w-md">
+        <div className="rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... p-[2px]">
+          <div className="  bg-black shadow-md rounded-2xl py-8 px-8 ">
+            <h1 className="text-3xl font-semibold mb-4 text-white">Sign Up</h1>
+            <p className="mb-6 text-white">Pleaase create your account</p>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label
+                  htmlFor="name"
+                  className="block text-white font-bold mb-2 text-sm"
+                >
+                  NAME
+                </label>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Name"
+                  value={formData.username}
+                  className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={handleChange}
+                />
+                 {errors.username && <span className="text-white">{errors.username}</span>}
               </div>
-              <div className="mb-4 lg:flex lg:justify-between">
-                <div>
-                  <label
-                    htmlFor="E-Mail/Phone number"
-                    className="block text-white font-bold mb-2 text-sm"
-                  >
-                    E-Mail/Phone number
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    id="username"
-                    placeholder=""
-                    className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block text-white font-bold mb-2 text-sm"
+                >
+                  Email
+                </label>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={handleChange}
+                />
+                {errors.email && <span className="text-white">{errors.email}</span>}
               </div>
-              <div className="mb-4 lg:flex lg:justify-between">
-                <div>
-                  <label
-                    htmlFor="Name/Prename"
-                    className="block text-white font-bold mb-2 text-sm"
-                  >
-                    Name/Prename
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    id="username"
-                    placeholder=""
-                    className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="password"
+                  className="block text-white font-bold mb-2 text-sm"
+                >
+                  PASSWORD
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="••••••••"
+                  value={formData.password}
+                  className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={handleChange}
+                />
+                {errors.password && <span className="text-white">{errors.password}</span>}
               </div>
-              <div className="mb-4 lg:flex lg:justify-between">
-                <div>
-                  <label
-                    htmlFor="Birthday"
-                    className="block text-white font-bold mb-2 text-sm"
-                  >
-                    Birthday
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    id="username"
-                    placeholder=""
-                    className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="confirmPassword"
+                  className="block text-white font-bold mb-2 text-sm"
+                >
+                  CONFIRM PASSWORD
+                </label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="••••••••"
+                  value={formData.confirmPassword}
+                  className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={handleChange}
+                />
+                {errors.confirmPassword && <span className="text-white">{errors.confirmPassword}</span>}
               </div>
-              <div className="mb-4 lg:flex lg:justify-between">
-                <div>
-                  <label
-                    htmlFor="Address"
-                    className="block text-white font-bold mb-2 text-sm"
-                  >
-                    Address
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    id="username"
-                    placeholder=""
-                    className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-              </div>
-              <div className="mb-4 lg:flex lg:justify-between">
-                <div>
-                  <label
-                    htmlFor="Country"
-                    className="block text-white font-bold mb-2 text-sm"
-                  >
-                    Country
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    id="username"
-                    placeholder=""
-                    className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-              </div>
-              <div className="mb-4 lg:flex lg:justify-between">
-                <div>
-                  <label
-                    htmlFor="Land/postal"
-                    className="block text-white font-bold mb-2 text-sm"
-                  >
-                    Land/postal
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    id="username"
-                    placeholder=""
-                    className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-              </div>
-              <div className="mb-4 lg:flex lg:justify-between">
-                <div>
-                  <label
-                    htmlFor="Artistname"
-                    className="block text-white font-bold mb-2 text-sm"
-                  >
-                    Artistname
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    id="username"
-                    placeholder=""
-                    className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-              </div>
-              <div className="mb-4 lg:flex lg:justify-between">
-                <div>
-                  <label
-                    htmlFor="Upload Profile Picture"
-                    className="block text-white font-bold mb-2 text-sm"
-                  >
-                    Upload Profile Picture
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="file"
-                    id="username"
-                    placeholder=""
-                    className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="">
-                  <div className="flex items-baseline ">
-                    <input type="checkbox" name="" value="" />
-                    <label
-                      htmlFor=""
-                      className="block text-white font-bold mb-2 text-sm pl-2"
-                    >
-                      &plusmn;Leeloop CONNECT Community 5.- (unique)
-                    </label>
-                  </div>
-                  <div className="flex items-baseline ">
-                    <input type="checkbox" name="" value="" />
-                    <label
-                      htmlFor=""
-                      className="block text-white font-bold mb-2 text-sm pl-2"
-                    >
-                      General terms, Cookie police and conditions read and
-                      accepted
-                    </label>
-                  </div>
+              <div className="flex gap-2 items-baseline ">
+                <div><input type="checkbox" name="" value="" /></div>
+                <div><label htmlFor="" className="block text-white mb-2 text-sm -translate-y-0.5">
+                  I Agree to the LeeLoop
+                </label>
                 </div>
               </div>
               <div className="mb-6">
@@ -209,35 +136,26 @@ function SignUp() {
                   type="submit"
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full"
                 >
-                  SIGN UP
+                  Sign Up
                 </button>
               </div>
             </form>
-            <div className="mt-6 flex items-baseline">
-              <span
-                htmlFor=""
-                className="block text-white font-bold mb-2 text-sm pl-2"
+            <div className="flex items-center justify-between">
+              <p
+                href="/reset"
+                class="inline-block align-baseline font-bold text-sm text-white"
               >
-                Already have an account ?
-              </span>
-              <span>
-                <a
-                  href="/reset"
-                  class="inline-block align-baseline font-bold text-sm text-red-500"
-                >
-                  &nbsp;LOGIN
-                </a>
-              </span>
+                Already have an account?{" "}
+                <Link to={"/login"}>
+                  <span className="text-blue-400"> Login</span>{" "}
+                </Link>
+              </p>
             </div>
           </div>
         </div>
       </div>
-      <div className="hidden lg:inline lg:mt-28">
-        <img className="" src={guitar} alt="" />
-      </div>
     </div>
-  </div>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;
