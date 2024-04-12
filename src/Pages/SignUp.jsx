@@ -1,5 +1,4 @@
 import {React, useState} from "react";
-import logo from "../image/logo.png";
 import { Link } from "react-router-dom";
 import axios from "axios"
 
@@ -29,7 +28,7 @@ function SignUp() {
     if (Object.keys(newErrors).length === 0) {
       console.log("Form submitted:", formData);
     }
-    const result = await axios.post('/api/v1/users/register',formData)
+    const result = await axios.post('http://localhost:8080/api/v1/users/register/',formData)
   alert('You are registered sucessfully')
   };
 

@@ -1,8 +1,34 @@
-import React from "react";
-import logo from "../image/logo.png";
+import { React, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const naviagte = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+    const res = await axios.post(
+      "http://localhost:8080/api/v1/users/login",
+      formData
+    );    
+    alert("You are login sucessfully");
+    naviagte("/");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-600 flex items-center justify-center shrink lg:basis-1/2">
       <div className="w-full max-w-md">
@@ -12,19 +38,21 @@ function Login() {
               Welcome back!
             </h1>
             <p className="mb-6 text-white">Pleaase login using your account</p>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label
                   htmlFor="username"
                   className="block text-white font-bold mb-2 text-sm"
                 >
-                  USERNAME
+                  Email
                 </label>
                 <input
                   type="text"
-                  id="username"
-                  placeholder="Username"
+                  name="email"
+                  placeholder="Email"
+                  value={formData.email}
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={handleChange}
                 />
               </div>
               <div className="mb-6">
@@ -36,9 +64,11 @@ function Login() {
                 </label>
                 <input
                   type="password"
-                  id="password"
+                  name="password"
                   placeholder="••••••••"
+                  value={formData.password}
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -64,7 +94,10 @@ function Login() {
                 href="/reset"
                 class="inline-block align-baseline font-bold text-sm text-white"
               >
-                Don't have any account? <Link to={"/signup"}><span className="text-blue-400">Sign Up</span> </Link> 
+                Don't have any account?{" "}
+                <Link to={"/signup"}>
+                  <span className="text-blue-400">Sign Up</span>{" "}
+                </Link>
               </p>
             </div>
           </div>
