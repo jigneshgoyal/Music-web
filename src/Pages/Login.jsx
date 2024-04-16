@@ -20,13 +20,26 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    const res = await axios.post(
-      "http://localhost:8080/api/v1/users/login",
-      formData
-    );    
-    alert("You are login sucessfully");
-    naviagte("/");
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/users/login",
+        formData
+      );
+      if (response.status == 200) {
+        alert("Login Successful");
+        naviagte("/");
+        setFormData({
+          email: "",
+          password: "",
+        });
+      }
+    } catch (error) {
+      alert("Please login with correct I'd Password");
+      setFormData({
+        email: "",
+        password: "",
+      });
+    }
   };
 
   return (
