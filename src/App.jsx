@@ -6,19 +6,24 @@ import Home from "./Pages/Home";
 import Uplaod from "./Pages/Upload";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
+import Dashboard from "./Pages/Dashboard";
+import MyMusic from "./Components/Dashbaord/MyMusic";
 
 export default function App() {
   return (
     <>
     <BrowserRouter>
-    <Header/>
+    {/* <Header/> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/upload" element={<Uplaod />} />
+        <Route path="/dashboard"  element={<Dashboard />}>
+        <Route path="/dashboard/mymusic" element={<MyMusic />} />
+        </Route>
       </Routes>
-      <Footer/>
+      {/* <Footer/> */}
     </BrowserRouter>
 
     </>
