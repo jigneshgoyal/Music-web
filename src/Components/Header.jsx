@@ -11,9 +11,14 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
   useEffect(() => {
     AOS.init();
   }, []);
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
     <header className="bg-gray-950 text-white shadow-2xl sticky top-0 z-50 py-3 px-7 md:py-4 lg:py-5">
@@ -24,48 +29,26 @@ const Header = () => {
         <nav className="hidden md:block">
           <ul className="flex space-x-4 md:space-x-6 lg:space-x-8">
             <li>
-              <a
-                href="#"
-                className="text-white font-semibold hover:text-blue-500 transition duration-300 ease-in-out"
-              >
-                Sell Your Music
-              </a>
+              <Link to="/" className="nav-link">Home</Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="text-white font-semibold hover:text-blue-500 transition duration-300 ease-in-out"
-              >
-                Artists services
-              </a>
+              <Link to="/sell" className="nav-link">Sell Your Music</Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="text-white font-semibold hover:text-blue-500 transition duration-300 ease-in-out"
-              >
-                Pricing
-              </a>
+              <Link to="/services" className="nav-link">Artists Services</Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="text-white font-semibold hover:text-blue-500 transition duration-300 ease-in-out"
-              >
-                Login
-              </a>
+              <Link to="/pricing" className="nav-link">Pricing</Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
-              >
-                SIGNUP
-              </a>
+              <Link to="/login" className="nav-link">Login</Link>
+            </li>
+            <li>
+              <Link to="/signup" className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">SIGNUP</Link>
             </li>
           </ul>
         </nav>
-        {/*Mobile Navbar*/}
+        {/* Mobile Navbar */}
         <button
           className="md:hidden"
           onClick={toggleMenu}
@@ -79,52 +62,25 @@ const Header = () => {
         </button>
       </div>
       {isMenuOpen && (
-        <nav className="bg-black py-4 md:hidden">
+        <nav className="bg-gray-950 py-4 md:hidden">
           <ul className="space-y-4 flex flex-col items-center">
-            <div data-aos="fade-right">
-              <li>
-                <a
-                  href="#"
-                  className="text-white font-semibold hover:text-blue-500 transition duration-300 ease-in-out"
-                >
-                  Sell Your Music
-                </a>
-              </li>
-            </div>
-            <div data-aos="fade-right">
-              <li>
-                <a
-                  href="#"
-                  className="text-white font-semibold hover:text-blue-500 transition duration-300 ease-in-out"
-                >
-                  Artists services
-                </a>
-              </li>
-            </div>
-            <div data-aos="fade-right">
-              <li>
-                <a
-                  href="#"
-                  className="text-white font-semibold hover:text-blue-500 transition duration-300 ease-in-out"
-                >
-                  Pricing
-                </a>
-              </li>
-            </div>
-            <div data-aos="fade-right">
-              <li>
-                <a
-                  href="#"
-                  className="text-white font-semibold hover:text-blue-500 transition duration-300 ease-in-out"
-                >
-                  Login
-                </a>
-              </li>
-            </div>
             <li>
-              <button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
-                <Link to={"/signup"}> SIGNUP </Link>
-              </button>
+              <Link to="/" className="nav-link" onClick={closeMenu}>Home</Link>
+            </li>
+            <li>
+              <Link to="/sell" className="nav-link" onClick={closeMenu}>Sell Your Music</Link>
+            </li>
+            <li>
+              <Link to="/services" className="nav-link" onClick={closeMenu}>Artists Services</Link>
+            </li>
+            <li>
+              <Link to="/pricing" className="nav-link" onClick={closeMenu}>Pricing</Link>
+            </li>
+            <li>
+              <Link to="/login" className="nav-link" onClick={closeMenu}>Login</Link>
+            </li>
+            <li>
+              <Link to="/signup" className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out" >SIGNUP</Link>
             </li>
           </ul>
         </nav>

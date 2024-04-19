@@ -1,7 +1,5 @@
 import React from "react";
 import Sidebar from "../Components/Dashbaord/Sidebar";
-import Profile from "../Components/Dashbaord/Profile";
-import MyMusic from "../Components/Dashbaord/MyMusic";
 import { Outlet } from "react-router-dom";
 
 

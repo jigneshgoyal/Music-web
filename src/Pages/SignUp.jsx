@@ -1,64 +1,40 @@
-import { React, useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { useRef } from "react";
+import { toast } from "react-toastify";
 function SignUp() {
-  const [isChecked, SetIsChecked] = useState()
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [errors, setErrors] = useState({});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm();
+  const password = useRef({});
+  password.current = watch("password", "");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const onSubmit = async (data) => {
+    try {
+      const result = await axios.post(
+        "http://localhost:8080/api/v1/users/register/",
+        data
+      );
+      if (result.status === 201) {
+        toast.success("Success message");
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newErrors = validateForm(formData);
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) {
-      console.log("Form submitted:", formData);
-    }
-    const result = await axios.post(
-      "http://localhost:8080/api/v1/users/register/",
-      formData
-    );
-    alert("You are registered sucessfully");
-  };
-
-  const validateForm = (data) => {
-    let errors = {};
-    if (data.username.length < 3) {
-      errors.username = "Username must be at least 3 characters long.";
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
-      errors.email = "Invalid email address.";
-    }
-    if (data.password.length < 6) {
-      errors.password = "Password must be at least 6 characters long.";
-    }
-    if (data.password !== data.confirmPassword) {
-      errors.confirmPassword = "Passwords do not match.";
-    }
-    return errors;
-  };
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-600 flex items-center justify-center shrink lg:basis-1/2">
       <div className="w-full max-w-md">
         <div className="rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... p-[2px]">
-          <div className="  bg-slate-800 shadow-md rounded-2xl py-8 px-8 ">
+          <div className="bg-slate-800 shadow-md rounded-2xl py-8 px-8">
             <h1 className="text-3xl font-semibold mb-4 text-white">Sign Up</h1>
-            <p className="mb-6 text-white">Pleaase create your account</p>
-            <form onSubmit={handleSubmit}>
+            <p className="mb-6 text-white">Please create your account</p>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <label
                   htmlFor="name"
@@ -70,13 +46,17 @@ function SignUp() {
                   type="text"
                   name="username"
                   placeholder="Name"
-                  value={formData.username}
+                  {...register("username", {
+                    required: "Username is required",
+                    minLength: {
+                      value: 3,
+                      message: "Username must be at least 3 characters long.",
+                    },
+                  })}
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={handleChange}
-                  required
                 />
                 {errors.username && (
-                  <span className="text-white">{errors.username}</span>
+                  <span className="text-white">{errors.username.message}</span>
                 )}
               </div>
               <div className="mb-4">
@@ -87,15 +67,20 @@ function SignUp() {
                   Email
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   name="email"
                   placeholder="Email"
-                  value={formData.email}
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Invalid email address",
+                    },
+                  })}
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={handleChange}
                 />
                 {errors.email && (
-                  <span className="text-white">{errors.email}</span>
+                  <span className="text-white">{errors.email.message}</span>
                 )}
               </div>
               <div className="mb-6">
@@ -109,12 +94,17 @@ function SignUp() {
                   type="password"
                   name="password"
                   placeholder="••••••••"
-                  value={formData.password}
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters long.",
+                    },
+                  })}
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={handleChange}
                 />
                 {errors.password && (
-                  <span className="text-white">{errors.password}</span>
+                  <span className="text-white">{errors.password.message}</span>
                 )}
               </div>
               <div className="mb-6">
@@ -128,17 +118,26 @@ function SignUp() {
                   type="password"
                   name="confirmPassword"
                   placeholder="••••••••"
-                  value={formData.confirmPassword}
+                  {...register("confirmPassword", {
+                    required: "Please confirm your password",
+                    validate: (value) =>
+                      value === password.current ||
+                      "The passwords do not match",
+                  })}
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={handleChange}
                 />
                 {errors.confirmPassword && (
-                  <span className="text-white">{errors.confirmPassword}</span>
+                  <span className="text-white">
+                    {errors.confirmPassword.message}
+                  </span>
                 )}
               </div>
               <div className="flex gap-2 items-baseline ">
                 <div>
-                  <input type="checkbox" name="" value="" checked={isChecked} onChange={() => SetIsChecked(!isChecked)}/>
+                  <input
+                    type="checkbox"
+                    {...register("terms", { required: true })}
+                  />
                 </div>
                 <div>
                   <label
@@ -153,7 +152,7 @@ function SignUp() {
                 <button
                   type="submit"
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full"
-                  disabled={!isChecked}
+                  disabled={!watch("terms")}
                 >
                   Sign Up
                 </button>
@@ -162,7 +161,7 @@ function SignUp() {
             <div className="flex items-center justify-between">
               <p
                 href="/reset"
-                class="inline-block align-baseline font-bold text-sm text-white"
+                className="inline-block align-baseline font-bold text-sm text-white"
               >
                 Already have an account?{" "}
                 <Link to={"/login"}>
