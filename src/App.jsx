@@ -13,6 +13,7 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import ArtistList from "./Components/AdminDashboard/ArtistList";
 import MusicList from "./Components/AdminDashboard/MusicList";
 import ChatList from "./Components/AdminDashboard/ChatList";
+import PaymentGateway from "./Components/PaymentGateway";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/upload" element={<Uplaod />} />
+          <Route path="/paymentgateway" element={<PaymentGateway />} />
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="profile" element={<Profile />} />
             <Route path="mymusic" element={<MyMusic />} />
