@@ -9,6 +9,10 @@ import Dashboard from "./Pages/Dashboard";
 import MyMusic from "./Components/Dashbaord/MyMusic";
 import Profile from "./Components/Dashbaord/Profile";
 import { ToastContainer } from "react-toastify";
+import AdminDashboard from "./Pages/AdminDashboard";
+import ArtistList from "./Components/AdminDashboard/ArtistList";
+import MusicList from "./Components/AdminDashboard/MusicList";
+import ChatList from "./Components/AdminDashboard/ChatList";
 
 export default function App() {
   return (
@@ -24,6 +28,11 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="profile" element={<Profile />} />
             <Route path="mymusic" element={<MyMusic />} />
+          </Route>
+          <Route path="/admindashboard" element={<AdminDashboard />}>
+            <Route path="artist" element={<ArtistList />} />
+            <Route path="music" element={<MusicList />} />
+            <Route path="chat" element={<ChatList />} />
           </Route>
         </Routes>
       </BrowserRouter>

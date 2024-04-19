@@ -9,6 +9,7 @@ function SignUp() {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm();
   const password = useRef({});
   password.current = watch("password", "");
@@ -20,10 +21,12 @@ function SignUp() {
         data
       );
       if (result.status === 201) {
-        toast.success("Success message");
+        toast.success("SignUp Successfully");
+        reset();
       }
     } catch (error) {
       toast.error(error.response.data.message);
+      reset();
     }
   };
 
