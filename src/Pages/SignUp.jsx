@@ -1,15 +1,14 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios"
-
-
+import axios from "axios";
 
 function SignUp() {
+  const [isChecked, SetIsChecked] = useState()
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -17,7 +16,7 @@ function SignUp() {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -28,24 +27,27 @@ function SignUp() {
     if (Object.keys(newErrors).length === 0) {
       console.log("Form submitted:", formData);
     }
-    const result = await axios.post('http://localhost:8080/api/v1/users/register/',formData)
-  alert('You are registered sucessfully')
+    const result = await axios.post(
+      "http://localhost:8080/api/v1/users/register/",
+      formData
+    );
+    alert("You are registered sucessfully");
   };
 
   const validateForm = (data) => {
     let errors = {};
     if (data.username.length < 3) {
-      errors.username = 'Username must be at least 3 characters long.';
+      errors.username = "Username must be at least 3 characters long.";
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(data.email)) {
-      errors.email = 'Invalid email address.';
+      errors.email = "Invalid email address.";
     }
     if (data.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters long.';
+      errors.password = "Password must be at least 6 characters long.";
     }
     if (data.password !== data.confirmPassword) {
-      errors.confirmPassword = 'Passwords do not match.';
+      errors.confirmPassword = "Passwords do not match.";
     }
     return errors;
   };
@@ -71,8 +73,11 @@ function SignUp() {
                   value={formData.username}
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   onChange={handleChange}
+                  required
                 />
-                 {errors.username && <span className="text-white">{errors.username}</span>}
+                {errors.username && (
+                  <span className="text-white">{errors.username}</span>
+                )}
               </div>
               <div className="mb-4">
                 <label
@@ -89,7 +94,9 @@ function SignUp() {
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   onChange={handleChange}
                 />
-                {errors.email && <span className="text-white">{errors.email}</span>}
+                {errors.email && (
+                  <span className="text-white">{errors.email}</span>
+                )}
               </div>
               <div className="mb-6">
                 <label
@@ -106,7 +113,9 @@ function SignUp() {
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   onChange={handleChange}
                 />
-                {errors.password && <span className="text-white">{errors.password}</span>}
+                {errors.password && (
+                  <span className="text-white">{errors.password}</span>
+                )}
               </div>
               <div className="mb-6">
                 <label
@@ -123,19 +132,28 @@ function SignUp() {
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   onChange={handleChange}
                 />
-                {errors.confirmPassword && <span className="text-white">{errors.confirmPassword}</span>}
+                {errors.confirmPassword && (
+                  <span className="text-white">{errors.confirmPassword}</span>
+                )}
               </div>
               <div className="flex gap-2 items-baseline ">
-                <div><input type="checkbox" name="" value="" /></div>
-                <div><label htmlFor="" className="block text-white mb-2 text-sm -translate-y-0.5">
-                  I Agree to the LeeLoop
-                </label>
+                <div>
+                  <input type="checkbox" name="" value="" checked={isChecked} onChange={() => SetIsChecked(!isChecked)}/>
+                </div>
+                <div>
+                  <label
+                    htmlFor=""
+                    className="block text-white mb-2 text-sm -translate-y-0.5"
+                  >
+                    I Agree to the LeeLoop
+                  </label>
                 </div>
               </div>
               <div className="mb-6">
                 <button
                   type="submit"
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full"
+                  disabled={!isChecked}
                 >
                   Sign Up
                 </button>

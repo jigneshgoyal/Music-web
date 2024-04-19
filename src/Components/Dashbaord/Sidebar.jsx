@@ -21,12 +21,7 @@ const Sidebar = () => {
   };
 
   return (
-    <nav className="bg-gray-950 h-full w-64 fixed left-0 top-0 flex flex-col text-white">
-      <div className="sidebar-container">
-        <div className="sidebar-logo-container p-4">
-          <h2 className="text-2xl">LeeLOOP</h2>
-        </div>
-
+    <nav className="bg-gray-950 h-screen fixed w-64 left-0 top-22 flex flex-col text-white ">
         <div className="sidebar-container">
           <div className="sidebar-items">
             {menu.map((item, index) => (
@@ -35,7 +30,7 @@ const Sidebar = () => {
               </div>
             ))}
           </div>
-        </div>
+
       </div>
     </nav>
   );

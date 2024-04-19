@@ -7,25 +7,25 @@ const MyMusic = () => {
       name: "Song 1",
       title: "A wonderful song",
       duration: "3:45",
-      status: "Uploaded",
+      status: "Released",
     },
     {
       name: "Song 2",
       title: "A wonderful song",
       duration: "4:20",
-      status: "Uploading",
+      status: "Awaiting",
     },
     {
       name: "Song 3",
       title: "A wonderful song",
       duration: "2:55",
-      status: "Uploaded",
+      status: "Released",
     },
     {
       name: "Song 4",
       title: "A wonderful song",
       duration: "5:10",
-      status: "Uploading",
+      status: "Awaiting",
     },
   ]);
 
@@ -56,23 +56,23 @@ const MyMusic = () => {
           </button>
           <button
             className={`px-4 py-2 mr-4 rounded-md ${
-              activeTab === "uploading"
+              activeTab === "released"
                 ? "bg-slate-500 text-black"
                 : "bg-transparent hover:bg-slate-800 hover:text-white"
             }`}
-            onClick={() => handleTabClick("uploading")}
+            onClick={() => handleTabClick("released")}
           >
-            Uploading
+            Released
           </button>
           <button
             className={`px-4 py-2 rounded-md ${
-              activeTab === "uploaded"
+              activeTab === "awaiting"
                 ? "bg-slate-500 text-black"
                 : "bg-transparent hover:bg-slate-800 hover:text-white   "
             }`}
-            onClick={() => handleTabClick("uploaded")}
+            onClick={() => handleTabClick("awaiting")}
           >
-            Uploaded
+            Awaiting
           </button>
         </div>
         <table className="w-full  table-fixed text-center m-3 border border-gray-500 rounded-lg ">
@@ -81,8 +81,6 @@ const MyMusic = () => {
               <th className="px-2 py-1">Name</th>
               <th className="px-2 py-1">Duration</th>
               <th className="px-2 py-1">Status</th>
-              <th className="px-2 py-1">Edit</th>
-              <th className="px-2 py-1">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -113,18 +111,8 @@ const MyMusic = () => {
                   </td>
                   <td className="px-2 py-1">{song.duration}</td>
                   <td className="px-2 py-1">{song.status}</td>
-                  <td className="px-2 py-1 relative">
-                    <button className="text-white text-xl border border-green-500 py-1 px-3 rounded-md bg-green-800 hover:bg-green-950">
-                      Edit
-                    </button>
-                    {/* Add your edit and delete options here */}
-                  </td>
-                  <td className="px-2 py-1 relative">
-                    <button className="text-white text-xl border border-red-500 py-1 px-3 rounded-md bg-red-800 hover:bg-red-950">
-                      Delete
-                    </button>
-                    {/* Add your edit and delete options here */}
-                  </td>
+                
+                 
                 </tr>
               ))}
           </tbody>

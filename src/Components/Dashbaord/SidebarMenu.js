@@ -1,11 +1,11 @@
 import UserIcon from '../../image/user.svg';
-import MusicIcon from '../../image/music.svg';
+import MusicIcon from '../../image/music2.png';
 
 const SidebarMenu = [ 
      {
         id: 1,
         icon: UserIcon,
-        path: '/dashboard',
+        path: '/dashboard/profile',
         title: 'My Profile',
     },
     {

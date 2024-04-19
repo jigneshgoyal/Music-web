@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Footer from "../Components/Footer";
 
 function Home() {
   return (
-    <div>
+    <>
       {/* First part */}
       <div className="relative min-h-screen ">
         <img
@@ -307,7 +308,9 @@ function Home() {
             </div>
           </div>
         </div>
-    </div>
+        <Footer />
+    </>
+    
   );
 }
 
