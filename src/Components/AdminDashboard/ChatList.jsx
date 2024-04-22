@@ -1,4 +1,6 @@
 import { Card, Typography } from "@material-tailwind/react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const TABLE_HEAD = ["S.No.", "Artist Name", "Button"];
 
@@ -36,15 +38,27 @@ const TABLE_ROWS = [
 ];
 
 export default function ChatList() {
+
+  const [artistData, setArtistData] = useState([]);
+  const getAllAdmin = async () => {
+    const result = await axios.get(
+      "http://localhost:8080/api/v1/admin/allUsers"
+    );
+    console.log(result.data.data);
+    setArtistData(result.data.data)
+  };
+  useEffect(() => {
+    getAllAdmin();
+  }, []);
   return (
-    <div className="bg-black text-white min-h-screen">
-      <div className="container mx-auto py-8">
+    <div className="bg-black text-white min-h-fit">
+      <div className="container mx-auto py-[35px]">
         <h1 className="text-4xl font-bold mb-8 text-center text-white">
           Chat List
         </h1>
 
-        <Card className="h-[500px] w-full overflow-scroll bg-slate-400">
-          <table className="w-full min-w-max table-auto text-center text-black">
+        <Card className="h-[500px] w-full overflow-scroll bg-gray-800">
+          <table className="w-full min-w-max table-auto text-center text-white">
             <thead>
               <tr>
                 {TABLE_HEAD.map((head) => (
@@ -64,8 +78,8 @@ export default function ChatList() {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(({ name }, index) => (
-                <tr key={name} className="even:bg-blue-gray-50/50">
+              {artistData.map(({ username }, index) => (
+                <tr key={index} className="even:bg-blue-gray-50/50">
                   <td className="p-4">
                     <Typography
                       variant="small"
@@ -81,7 +95,7 @@ export default function ChatList() {
                       color="blue-gray"
                       className="font-semibold"
                     >
-                      {name}
+                      {username}
                     </Typography>
                   </td>
                  

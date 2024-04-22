@@ -1,44 +1,26 @@
-import { React, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 
 function Login() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const naviagte = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     try {
       const response = await axios.post(
         "http://localhost:8080/api/v1/users/login",
-        formData
+        data
       );
-      if (response.status == 200) {
-        alert("Login Successful");
-        naviagte("/");
-        setFormData({
-          email: "",
-          password: "",
-        });
+      if (response.status === 200) {
+        toast.success("Login Successfully");
+        navigate("/");
       }
     } catch (error) {
-      alert("Please login with correct I'd Password");
-      setFormData({
-        email: "",
-        password: "",
-      });
+      toast.error("Please login with correct ID and Password");
     }
   };
 
@@ -50,11 +32,11 @@ function Login() {
             <h1 className="text-3xl font-semibold mb-4 text-white">
               Welcome back!
             </h1>
-            <p className="mb-6 text-white">Pleaase login using your account</p>
-            <form onSubmit={handleSubmit}>
+            <p className="mb-6 text-white">Please login using your account</p>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <label
-                  htmlFor="username"
+                  htmlFor="email"
                   className="block text-white font-bold mb-2 text-sm"
                 >
                   Email
@@ -63,10 +45,10 @@ function Login() {
                   type="text"
                   name="email"
                   placeholder="Email"
-                  value={formData.email}
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={handleChange}
+                  {...register("email", { required: true })}
                 />
+                {errors.email && <span className="text-red-500">Email is required</span>}
               </div>
               <div className="mb-6">
                 <label
@@ -79,16 +61,16 @@ function Login() {
                   type="password"
                   name="password"
                   placeholder="••••••••"
-                  value={formData.password}
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={handleChange}
+                  {...register("password", { required: true })}
                 />
+                {errors.password && <span className="text-red-500">Password is required</span>}
               </div>
 
               <div className="mb-4">
                 <a
                   href="/reset"
-                  class="inline-block align-baseline font-bold text-sm text-white"
+                  className="inline-block align-baseline font-bold text-sm text-white"
                 >
                   Forgot your password?
                 </a>
@@ -103,11 +85,8 @@ function Login() {
               </div>
             </form>
             <div className="flex items-center justify-between">
-              <p
-                href="/reset"
-                class="inline-block align-baseline font-bold text-sm text-white"
-              >
-                Don't have any account?{" "}
+              <p className="inline-block align-baseline font-bold text-sm text-white">
+                Don't have an account?{" "}
                 <Link to={"/signup"}>
                   <span className="text-blue-400">Sign Up</span>{" "}
                 </Link>

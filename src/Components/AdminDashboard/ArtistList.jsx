@@ -1,60 +1,31 @@
 import { Card, Typography } from "@material-tailwind/react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const TABLE_HEAD = ["S.No.", "Name", "Email"];
 
-const TABLE_ROWS = [
-  {
-    name: "John Michael",
-    email: "abc@gmail.com",
-  },
-  {
-    name: "Alexa Liras",
-    email: "abc@gmail.com",
-  },
-  {
-    name: "Laurent Perrier",
-    email: "abc@gmail.com",
-  },
-  {
-    name: "Michael Levi",
-    email: "abc@gmail.com",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-  },
-  {
-    name: "John Michael",
-    email: "abc@gmail.com",
-  },
-  {
-    name: "Alexa Liras",
-    email: "abc@gmail.com",
-  },
-  {
-    name: "Laurent Perrier",
-    email: "abc@gmail.com",
-  },
-  {
-    name: "Michael Levi",
-    email: "abc@gmail.com",
-  },
-  {
-    name: "Richard Gran",
-    email: "abc@gmail.com",
-  },
-];
-
 export default function ArtistList() {
+  const [adminData, setAdminData] = useState([]);
+  const getAllAdmin = async () => {
+    const result = await axios.get(
+      "http://localhost:8080/api/v1/admin/allUsers"
+    );
+    console.log(result.data.data);
+    setAdminData(result.data.data)
+  };
+  useEffect(() => {
+    getAllAdmin();
+  }, []);
+
   return (
-    <div className="bg-black text-white min-h-screen">
-      <div className="container mx-auto py-8">
+    <div className="bg-black text-white min-h-fit">
+      <div className="container mx-auto py-[35px]">
         <h1 className="text-4xl font-bold mb-8 text-center text-white">
           Artist List
         </h1>
 
-        <Card className="h-[500px] w-full overflow-scroll bg-slate-400">
-          <table className="w-full min-w-max table-auto text-center text-black">
+        <Card className="h-[500px] w-full overflow-scroll bg-gray-800">
+          <table className="w-full min-w-max table-auto text-center text-white">
             <thead>
               <tr>
                 {TABLE_HEAD.map((head) => (
@@ -74,8 +45,8 @@ export default function ArtistList() {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(({ name, email }, index) => (
-                <tr key={name} className="even:bg-blue-gray-50/50">
+              {adminData.map(({ username, email }, index) => (
+                <tr key={index} className="even:bg-blue-gray-50/50">
                   <td className="p-4">
                     <Typography
                       variant="small"
@@ -91,7 +62,7 @@ export default function ArtistList() {
                       color="blue-gray"
                       className="font-semibold"
                     >
-                      {name}
+                      {username}
                     </Typography>
                   </td>
                   <td className="p-4">

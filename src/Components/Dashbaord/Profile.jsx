@@ -18,13 +18,10 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <h2 className="text-xl font-semibold">Jignesh Goyal</h2>
-                <p>Music lover</p>
+                <h2 className="text-2xl font-semibold">Jignesh Goyal</h2>
               </div>
             </div>
-            <button className="text-white text-xl border border-green-500 py-1 px-3 rounded-md bg-green-800 hover:bg-green-950">
-              Edit
-            </button>
+          
           </div>
         </div>
 
@@ -38,7 +35,7 @@ const Profile = () => {
               </div>
               <button className="text-white text-xl border border-green-500 py-1 px-3 rounded-md bg-green-800 hover:bg-green-950">
                 Edit
-              </button>
+              </button >
             </div>
           </div>
           <div className="grid grid-cols-2 gap-x-8">

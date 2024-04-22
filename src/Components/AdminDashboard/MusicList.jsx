@@ -1,4 +1,6 @@
 import { Card, Typography } from "@material-tailwind/react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const TABLE_HEAD = ["S.No.", "Artist Name", "Music Title", "Button"];
 
@@ -46,15 +48,27 @@ const TABLE_ROWS = [
 ];
 
 export default function MusicList() {
+  const [musicData, setMusicData] = useState([]);
+  const getAllMusic = async () => {
+    const result = await axios.get(
+      "http://localhost:8080/api/v1/admin/allMusic"
+    );
+    console.log(result.data.data);
+    setMusicData(result.data.data)
+  };
+  useEffect(() => {
+    getAllMusic();
+  }, []);
+
   return (
-    <div className="bg-black text-white min-h-screen">
-      <div className="container mx-auto py-8">
+    <div className="bg-black text-white min-h-fit">
+      <div className="container mx-auto py-[35px]">
         <h1 className="text-4xl font-bold mb-8 text-center text-white">
           Music List
         </h1>
 
-        <Card className="h-[500px] w-full overflow-scroll bg-slate-400">
-          <table className="w-full min-w-max table-auto text-center text-black">
+        <Card className="h-[500px] w-full overflow-scroll bg-gray-800">
+          <table className="w-full min-w-max table-auto text-center text-white">
             <thead>
               <tr>
                 {TABLE_HEAD.map((head) => (
@@ -74,8 +88,8 @@ export default function MusicList() {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(({ name, title }, index) => (
-                <tr key={name} className="even:bg-blue-gray-50/50">
+              {musicData.map(({ artist, title }, index) => (
+                <tr key={index} className="even:bg-blue-gray-50/50">
                   <td className="p-4">
                     <Typography
                       variant="small"
@@ -91,7 +105,7 @@ export default function MusicList() {
                       color="blue-gray"
                       className="font-semibold"
                     >
-                      {name}
+                      {artist.fullName}
                     </Typography>
                   </td>
                   <td className="p-4">

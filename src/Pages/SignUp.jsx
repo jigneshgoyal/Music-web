@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { useRef } from "react";
 import { toast } from "react-toastify";
@@ -17,12 +17,14 @@ function SignUp() {
   const onSubmit = async (data) => {
     try {
       const result = await axios.post(
-        "http://localhost:8080/api/v1/users/register/",
+        "http://localhost:8080/api/v1/user/register/",
         data
       );
-      if (result.status === 201) {
+
+      if (result.status === 200) {
         toast.success("SignUp Successfully");
         reset();
+        Navigate('/login')
       }
     } catch (error) {
       toast.error(error.response.data.message);
