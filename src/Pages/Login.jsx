@@ -5,19 +5,31 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 
-function Login() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+function Login(props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { setTokenChanges } = props;
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/users/login",
+        "http://localhost:8080/api/v1/user/login",
         data
       );
+
       if (response.status === 200) {
         toast.success("Login Successfully");
         navigate("/");
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        const id = response.data.user._id;
+        localStorage.setItem("id", id);
+        setTokenChanges((prev) => !prev);
       }
     } catch (error) {
       toast.error("Please login with correct ID and Password");
@@ -48,7 +60,9 @@ function Login() {
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   {...register("email", { required: true })}
                 />
-                {errors.email && <span className="text-red-500">Email is required</span>}
+                {errors.email && (
+                  <span className="text-red-500">Email is required</span>
+                )}
               </div>
               <div className="mb-6">
                 <label
@@ -64,7 +78,9 @@ function Login() {
                   className="appearance-none border rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   {...register("password", { required: true })}
                 />
-                {errors.password && <span className="text-red-500">Password is required</span>}
+                {errors.password && (
+                  <span className="text-red-500">Password is required</span>
+                )}
               </div>
 
               <div className="mb-4">

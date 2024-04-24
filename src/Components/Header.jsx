@@ -5,15 +5,39 @@ import logo from "../image/logo1.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const Header = () => {
+const Header = (props) => {
+  const [token, setToken] = useState(localStorage.getItem("token")); // Initialize token state with the value from localStorage
+  const [localStorageChange, setLocalStorageChange] = useState(false);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  useEffect(() => {
+    setLocalStorageChange((prev) => !prev);
+  }, [props.tokenChanges]);
 
   useEffect(() => {
     AOS.init();
+    setToken(
+      localStorage.getItem("token") ? localStorage.getItem("token") : null
+    );
+  }, [localStorageChange]); // Rerun effect when localStorageChange state changes
+
+  const handleLocalStorageChange = () => {
+    // Toggle localStorageChange state to trigger rerender
+    console.log("Header Re Render");
+    setLocalStorageChange((prevState) => !prevState);
+  };
+  useEffect(() => {
+    // Listen for changes in localStorage
+    window.addEventListener("storage", handleLocalStorageChange);
+
+    return () => {
+      // Clean up event listener
+      window.removeEventListener("storage", handleLocalStorageChange);
+    };
   }, []);
 
   const closeMenu = () => {
@@ -29,23 +53,48 @@ const Header = () => {
         <nav className="hidden md:block">
           <ul className="flex space-x-4 md:space-x-6 lg:space-x-8">
             <li>
-              <Link to="/" className="nav-link">Home</Link>
+              <Link to="/" className="nav-link">
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/sell" className="nav-link">Sell Your Music</Link>
+              <Link to="/sell" className="nav-link">
+                Sell Your Music
+              </Link>
             </li>
             <li>
-              <Link to="/services" className="nav-link">Artists Services</Link>
+              <Link to="/services" className="nav-link">
+                Artists Services
+              </Link>
             </li>
             <li>
-              <Link to="/pricing" className="nav-link">Pricing</Link>
+              <Link to="/pricing" className="nav-link">
+                Pricing
+              </Link>
             </li>
-            <li>
-              <Link to="/login" className="nav-link">Login</Link>
-            </li>
-            <li>
-              <Link to="/signup" className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">SIGNUP</Link>
-            </li>
+            {token ? (
+              <li>
+                <Link to="/dashboard/profile" className="nav-link">
+                  Dashboard
+                </Link>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <Link to="/login" className="nav-link">
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/signup"
+                    className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
+                  >
+                    SIGNUP
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
         {/* Mobile Navbar */}
@@ -65,23 +114,53 @@ const Header = () => {
         <nav className="bg-gray-950 py-4 md:hidden">
           <ul className="space-y-4 flex flex-col items-center">
             <li>
-              <Link to="/" className="nav-link" onClick={closeMenu}>Home</Link>
+              <Link to="/" className="nav-link" onClick={closeMenu}>
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/sell" className="nav-link" onClick={closeMenu}>Sell Your Music</Link>
+              <Link to="/sell" className="nav-link" onClick={closeMenu}>
+                Sell Your Music
+              </Link>
             </li>
             <li>
-              <Link to="/services" className="nav-link" onClick={closeMenu}>Artists Services</Link>
+              <Link to="/services" className="nav-link" onClick={closeMenu}>
+                Artists Services
+              </Link>
             </li>
             <li>
-              <Link to="/pricing" className="nav-link" onClick={closeMenu}>Pricing</Link>
+              <Link to="/pricing" className="nav-link" onClick={closeMenu}>
+                Pricing
+              </Link>
             </li>
-            <li>
-              <Link to="/login" className="nav-link" onClick={closeMenu}>Login</Link>
-            </li>
-            <li>
-              <Link to="/signup" className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out" >SIGNUP</Link>
-            </li>
+            {token ? (
+              <li>
+                <Link
+                  to="/dashboard/profile"
+                  className="nav-link"
+                  onClick={closeMenu}
+                >
+                  Dashboard
+                </Link>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <Link to="/login" className="nav-link" onClick={closeMenu}>
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/signup"
+                    className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
+                    onClick={closeMenu}
+                  >
+                    SIGNUP
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       )}

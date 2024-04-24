@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Profile = () => {
+  const [profileDetail, setProfileDetail]= useState({})
+  const id = localStorage.getItem("id");
+
+  const getProfileDetail= async()=>{
+    const id = localStorage.getItem("id");
+    console.log(id)
+    const response = await axios.put(`http://localhost:8080/api/v1/user/allDetails${id}`)
+    console.log(response)
+  }
+  useEffect(()=>{getProfileDetail()},[])
+
   return (
     <div className="bg-black min-h-screen text-white py-8 mt-0">
       <div className="max-w-4xl mx-auto ">

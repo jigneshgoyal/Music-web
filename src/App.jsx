@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import Home from "./Pages/Home";
@@ -16,19 +16,41 @@ import ChatList from "./Components/AdminDashboard/ChatList";
 import PaymentGateway from "./Components/PaymentGateway";
 import Setting from "./Components/Dashbaord/Setting";
 
+function PrivateRoute({token,children}){
+  if(token === null) return <Navigate to={'/login'} replace />
+  return children
+}
+
 export default function App() {
+  const [tokenChanges, setTokenChanges] = useState(false);
+  const [token, setToken]  = useState(localStorage.getItem('token'))
+
+  useEffect(()=>{
+    setToken(localStorage.getItem('token'))
+  }, [tokenChanges])
+
   return (
     <>
       <BrowserRouter>
         <ToastContainer />
-        <Header />
+        <Header tokenChanges={tokenChanges} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={<Login setTokenChanges={setTokenChanges} />}
+          />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/upload" element={<Uplaod />} />
           <Route path="/paymentgateway" element={<PaymentGateway />} />
-          <Route path="/dashboard" element={<Dashboard />}>
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute token={token}>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          >
             <Route path="profile" element={<Profile />} />
             <Route path="mymusic" element={<MyMusic />} />
             <Route path="setting" element={<Setting />} />

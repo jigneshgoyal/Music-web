@@ -4,48 +4,6 @@ import axios from "axios";
 
 const TABLE_HEAD = ["S.No.", "Artist Name", "Music Title", "Button"];
 
-const TABLE_ROWS = [
-  {
-    name: "John Michael",
-    title: "Music Title",
-  },
-  {
-    name: "Alexa Liras",
-    title: "Music Title",
-  },
-  {
-    name: "Laurent Perrier",
-    title: "Music Title",
-  },
-  {
-    name: "Michael Levi",
-    title: "Music Title",
-  },
-  {
-    name: "Richard Gran",
-    title: "Music Title",
-  },
-  {
-    name: "John Michael",
-    title: "Music Title",
-  },
-  {
-    name: "Alexa Liras",
-    title: "Music Title",
-  },
-  {
-    name: "Laurent Perrier",
-    title: "Music Title",
-  },
-  {
-    name: "Michael Levi",
-    title: "Music Title",
-  },
-  {
-    name: "Richard Gran",
-    title: "Music Title",
-  },
-];
 
 export default function MusicList() {
   const [musicData, setMusicData] = useState([]);
@@ -105,7 +63,7 @@ export default function MusicList() {
                       color="blue-gray"
                       className="font-semibold"
                     >
-                      {artist.fullName}
+                      {artist.username}
                     </Typography>
                   </td>
                   <td className="p-4">
