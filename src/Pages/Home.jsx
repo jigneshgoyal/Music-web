@@ -5,13 +5,13 @@ import Footer from "../Components/Footer";
 function Home() {
   const navigate = useNavigate();
 
-  const loginUser =  () => {
+  const loginUser = () => {
     const token = localStorage.getItem("token");
     console.log("token", token);
     if (!token) {
       navigate("/login");
-    } else{
-      navigate("/upload")
+    } else {
+      navigate("/upload");
     }
   };
   return (
@@ -31,14 +31,12 @@ function Home() {
             </span>
           </div>
           <div className="rounded-full bg-gradient-to-r via-purple-500 from-indigo-500 to-pink-500 ... p-[2px] hover:scale-110 mr-3 mt-7">
-            {/* <Link to={"/upload"}> */}
-              <button
-                onClick={loginUser}
-                className="rounded-full font-bold bg-slate-700 px-8 py-2 text-white text-2xl"
-              >
-                Upload
-              </button>
-            {/* </Link> */}
+            <button
+              onClick={loginUser}
+              className="rounded-full font-bold bg-slate-700 px-8 py-2 text-white text-2xl"
+            >
+              Upload
+            </button>
           </div>
         </div>
       </div>

@@ -1,43 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import logo from "../image/logo1.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 const Header = (props) => {
-  const [token, setToken] = useState(localStorage.getItem("token")); // Initialize token state with the value from localStorage
-  const [localStorageChange, setLocalStorageChange] = useState(false);
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  useEffect(() => {
-    setLocalStorageChange((prev) => !prev);
-  }, [props.tokenChanges]);
 
   useEffect(() => {
     AOS.init();
-    setToken(
-      localStorage.getItem("token") ? localStorage.getItem("token") : null
-    );
-  }, [localStorageChange]); // Rerun effect when localStorageChange state changes
-
-  const handleLocalStorageChange = () => {
-    // Toggle localStorageChange state to trigger rerender
-    console.log("Header Re Render");
-    setLocalStorageChange((prevState) => !prevState);
-  };
-  useEffect(() => {
-    // Listen for changes in localStorage
-    window.addEventListener("storage", handleLocalStorageChange);
-
-    return () => {
-      // Clean up event listener
-      window.removeEventListener("storage", handleLocalStorageChange);
-    };
   }, []);
 
   const closeMenu = () => {
@@ -72,12 +48,18 @@ const Header = (props) => {
                 Pricing
               </Link>
             </li>
-            {token ? (
-              <li>
-                <Link to="/dashboard/profile" className="nav-link">
-                  Dashboard
-                </Link>
-              </li>
+            {props.token ? (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/profile"
+                    className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                
+              </>
             ) : (
               <>
                 <li>
@@ -137,7 +119,7 @@ const Header = (props) => {
               <li>
                 <Link
                   to="/dashboard/profile"
-                  className="nav-link"
+                  className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
                   onClick={closeMenu}
                 >
                   Dashboard
