@@ -16,7 +16,7 @@ const AdminSidebarMenu = [
     },
     {
         id: 3,
-        icon: UserIcon,
+        icon: MusicIcon,
         path: '/admindashboard/chat',
         title: 'Chat',
     },

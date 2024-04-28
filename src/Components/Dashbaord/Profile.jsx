@@ -3,16 +3,24 @@ import { useEffect } from "react";
 import axios from "axios";
 
 const Profile = () => {
-  const [profileDetail, setProfileDetail]= useState({})
-  const id = localStorage.getItem("id");
+  const [profileDetail, setProfileDetail] = useState({});
 
-  const getProfileDetail= async()=>{
-    const id = localStorage.getItem("id");
-    console.log(id)
-    const response = await axios.put(`http://localhost:8080/api/v1/user/allDetails${id}`)
-    console.log(response)
-  }
-  useEffect(()=>{getProfileDetail()},[])
+  const getProfileDetail = async () => {
+    const response = await axios.get(
+      `http://localhost:8080/api/v1/user/allDetails`,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: localStorage.getItem("token").trim(),
+        },
+      }
+    );
+    console.log(response.data.data)
+    setProfileDetail(response.data.data);
+  };
+  useEffect(() => {
+    getProfileDetail();
+  }, []);
 
   return (
     <div className="bg-black min-h-screen text-white py-8 mt-0">
@@ -25,16 +33,15 @@ const Profile = () => {
             <div className="flex items-center">
               <div className="w-16 h-16 bg-white rounded-full overflow-hidden mr-4">
                 <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"
+                  src={profileDetail.profileImage}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div>
-                <h2 className="text-2xl font-semibold">Jignesh Goyal</h2>
+                <h2 className="text-2xl font-semibold">{profileDetail.username}</h2>
               </div>
             </div>
-          
           </div>
         </div>
 
@@ -48,34 +55,23 @@ const Profile = () => {
               </div>
               <button className="text-white text-xl border border-green-500 py-1 px-3 rounded-md bg-green-800 hover:bg-green-950">
                 Edit
-              </button >
+              </button>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-x-8">
             <div className="mb-4">
               <label htmlFor="firstName" className="block ">
-                First Name:
+              Name:
               </label>
               <input
                 type="text"
                 id="firstName"
                 className="bg-gray-800 text-white focus:outline-none text-xl font-semibold mt-1"
-                value="Jignesh"
+                value={profileDetail.username}
                 readOnly
               />
             </div>
-            <div className="mb-4">
-              <label htmlFor="firstName" className="block ">
-                Last Name:
-              </label>
-              <input
-                type="text"
-                id="firstName"
-                className="bg-gray-800 text-white focus:outline-none text-xl font-semibold mt-1"
-                value="Goyal"
-                readOnly
-              />
-            </div>
+           
             <div className="mb-4">
               <label htmlFor="firstName" className="block ">
                 Email:
@@ -84,19 +80,19 @@ const Profile = () => {
                 type="text"
                 id="firstName"
                 className="bg-gray-800 text-white focus:outline-none text-xl font-semibold mt-1"
-                value="abc@gmail.com"
+                value={profileDetail.email}
                 readOnly
               />
             </div>
             <div className="mb-4">
               <label htmlFor="firstName" className="block ">
-                Mobile No.:
+                Address :
               </label>
               <input
                 type="text"
                 id="firstName"
                 className="bg-gray-800 text-white focus:outline-none text-xl font-semibold mt-1"
-                value="+91 9876543210"
+                value={profileDetail.address}
                 readOnly
               />
             </div>

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import Cookies from 'js-cookie'
 
 function Login(props) {
   const {
@@ -27,6 +28,8 @@ function Login(props) {
         navigate("/");
         const token = response.data.token;
         localStorage.setItem("token", token);
+        Cookies.set("token", token);
+        setTokenChanges(token)
         const id = response.data.user._id;
         localStorage.setItem("id", id);
         setTokenChanges((prev) => !prev);

@@ -52,11 +52,16 @@ const Upload = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            "Authorization": "Bearer " + localStorage.getItem('token').trim()
+            "Authorization": localStorage.getItem('token').trim()
           },
         }
       );
       console.log(response);
+      if(response.status == 200){
+        alert("Music uploaded successfully")
+      }else {
+        alert("Something went wrong")
+      }
     } catch (error) {
       console.error(error);
     }
