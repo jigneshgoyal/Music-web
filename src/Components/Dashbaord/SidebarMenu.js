@@ -20,6 +20,12 @@ const SidebarMenu = [
     path: "/dashboard/setting",
     title: "Setting",
   },
+  {
+    id: 4,
+    icon: UserIcon,
+    path: "/dashboard/leeloop-connect",
+    title: "Chatting",
+  },
 ];
 
 export default SidebarMenu;

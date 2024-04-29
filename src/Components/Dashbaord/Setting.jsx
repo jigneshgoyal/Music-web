@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import music from "../../image/music.jpg";
+import { Link } from "react-router-dom";
 
 function Setting() {
   const [data, setData] = useState({});
-  const [imageSrc, setImageSrc] = useState(music);
+  const [imageSrc, setImageSrc] = useState(data.profileImage);
   const [formData, setFormData] = useState();
 
   const getProfileDetail = async () => {
@@ -54,16 +54,24 @@ function Setting() {
           },
         }
       );
-      console.log(response)
-      if(response.status == 200){
-        alert("Details updated successfully")
+      console.log(response);
+      if (response.status == 200) {
+        alert("Details updated successfully");
       } else {
-        alert("Something went wrong")
+        alert("Something went wrong");
       }
-      
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const passChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const passSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form Data :", formData);
   };
 
   return (
@@ -86,6 +94,7 @@ function Setting() {
                     type="file"
                     hidden
                     name="profileImage"
+                    value={data.profileImage}
                     onChange={handleCoverImageChange}
                   />
                   <div className="flex w-40 h-9 px-2 flex-col bg-yellow-500 rounded-xl -translate-x-16 shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none border ">
@@ -101,7 +110,6 @@ function Setting() {
                 </label>
                 <input
                   type="text"
-                  id="firstName"
                   name="username"
                   placeholder={data.username}
                   className="bg-gray-400 text-black text-xl font-semibold mt-1 px-2 py-1 rounded"
@@ -114,7 +122,6 @@ function Setting() {
                 </label>
                 <input
                   type="text"
-                  id="address"
                   name="address"
                   placeholder={data.address}
                   className="bg-gray-400 text-black text-xl font-semibold mt-1 px-2 py-1 rounded"
@@ -123,9 +130,11 @@ function Setting() {
               </div>
 
               <div>
-                <button className="bg-red-500 text-black rounded-md px-4 py-2 my-4 mx-2">
-                  Cancel
-                </button>
+                <Link to="/dashboard/profile">
+                  <button className="bg-red-500 text-black rounded-md px-4 py-2 my-4 mx-2">
+                    Cancel
+                  </button>
+                </Link>
                 <button
                   type="submit"
                   className="bg-green-500 text-black rounded-md px-4 py-2 m-2"
@@ -139,17 +148,18 @@ function Setting() {
 
         <h1 className="text-3xl font-bold m-8 text-center">CHANGE PASSWORD</h1>
         <div className="bg-gray-800 rounded-lg p-6">
-          <form className="translate-x-16">
+          <form className="translate-x-16" onSubmit={passSubmit}>
             <div className="grid grid-cols-2 gap-x-8 mt-5">
               <div className="mb-4">
                 <label htmlFor="firstName" className="block ">
                   Old Password :
                 </label>
                 <input
-                  type="text"
-                  id="firstName"
+                  type="password"
+                  name="oldPassword"
                   placeholder="*********"
                   className="bg-gray-400 text-black text-xl font-semibold mt-1 px-2 py-1 rounded"
+                  onChange={passChange}
                 />
               </div>
               <div className="mb-4">
@@ -157,19 +167,24 @@ function Setting() {
                   New Password :
                 </label>
                 <input
-                  type="text"
-                  id="address"
+                  type="password"
+                  name="newPassword"
                   placeholder="*********"
                   className="bg-gray-400 text-black text-xl font-semibold mt-1 px-2 py-1 rounded"
-                  readOnly
+                  onChange={passChange}
                 />
               </div>
 
               <div>
-                <button className="bg-red-500 text-black rounded-md px-4 py-2 my-4 mx-2">
-                  Cancel
-                </button>
-                <button className="bg-green-500 text-black rounded-md px-4 py-2 m-2">
+                <Link to="/dashboard/profile">
+                  <button className="bg-red-500 text-black rounded-md px-4 py-2 my-4 mx-2">
+                    Cancel
+                  </button>
+                </Link>
+                <button
+                  type="submit"
+                  className="bg-green-500 text-black rounded-md px-4 py-2 m-2"
+                >
                   Update
                 </button>
               </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import {Link} from 'react-router-dom'
 
 const Profile = () => {
   const [profileDetail, setProfileDetail] = useState({});
@@ -53,9 +54,11 @@ const Profile = () => {
               <div className="flex items-center">
                 <h2 className="text-4xl font-bold">Personal Details</h2>
               </div>
+              <Link to="/dashboard/setting">
               <button className="text-white text-xl border border-green-500 py-1 px-3 rounded-md bg-green-800 hover:bg-green-950">
                 Edit
               </button>
+              </Link>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-x-8">

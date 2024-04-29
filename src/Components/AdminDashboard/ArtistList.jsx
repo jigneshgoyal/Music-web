@@ -2,7 +2,7 @@ import { Card, Typography } from "@material-tailwind/react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const TABLE_HEAD = ["S.No.", "Name", "Email"];
+const TABLE_HEAD = ["S.No.", "Name", "Email", "Address"];
 
 export default function ArtistList() {
   const [adminData, setAdminData] = useState([]);
@@ -45,7 +45,7 @@ export default function ArtistList() {
               </tr>
             </thead>
             <tbody>
-              {adminData.map(({ username, email }, index) => (
+              {adminData.map(({ username, email, address }, index) => (
                 <tr key={index} className="even:bg-blue-gray-50/50">
                   <td className="p-4">
                     <Typography
@@ -72,6 +72,15 @@ export default function ArtistList() {
                       className="font-semibold"
                     >
                       {email}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-semibold"
+                    >
+                      {address}
                     </Typography>
                   </td>
                 </tr>

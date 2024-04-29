@@ -5,7 +5,7 @@ import logo from "../image/logo1.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const Header = (props) => {
+const Header = ({token, setTokenChanges}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -18,6 +18,12 @@ const Header = (props) => {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const logout = () => {
+    console.log("clicked")
+    localStorage.clear();
+    setTokenChanges((prev) => !prev);
   };
 
   return (
@@ -48,8 +54,13 @@ const Header = (props) => {
                 Pricing
               </Link>
             </li>
-            {props.token ? (
+            {token ? (
               <>
+                <li>
+                  <button className="nav-link" onClick={logout}>
+                    Logout
+                  </button>
+                </li>
                 <li>
                   <Link
                     to="/dashboard/profile"
@@ -58,7 +69,6 @@ const Header = (props) => {
                     Dashboard
                   </Link>
                 </li>
-                
               </>
             ) : (
               <>

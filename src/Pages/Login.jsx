@@ -29,9 +29,8 @@ function Login(props) {
         const token = response.data.token;
         localStorage.setItem("token", token);
         Cookies.set("token", token);
-        setTokenChanges(token)
-        const id = response.data.user._id;
-        localStorage.setItem("id", id);
+        // setTokenChanges(token)
+       
         setTokenChanges((prev) => !prev);
       }
     } catch (error) {

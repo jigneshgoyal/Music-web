@@ -61,13 +61,13 @@ const MyMusic = () => {
           </button>
           <button
             className={`px-4 py-2 rounded-md ${
-              activeTab === "awaiting"
+              activeTab === "waiting"
                 ? "bg-slate-500 text-black"
                 : "bg-transparent hover:bg-slate-800 hover:text-white   "
             }`}
-            onClick={() => handleTabClick("awaiting")}
+            onClick={() => handleTabClick("waiting")}
           >
-            Awaiting
+            waiting
           </button>
         </div>
         <table className="w-full  table-fixed text-center m-3 border border-gray-500 rounded-lg ">
@@ -182,14 +182,7 @@ const MyMusic = () => {
                                         </div>
                                         <div>
                                           <p className="font-bold">Link:</p>
-                                          <a
-                                            href={song.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-blue-500 underline"
-                                          >
-                                            {song.link}
-                                          </a>
+                                         <p>{song.publishedLink}</p>
                                         </div>
                                       </div>
                                     </div>
