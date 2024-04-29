@@ -1,51 +1,18 @@
 import { Card, Typography } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const TABLE_HEAD = ["S.No.", "Artist Name", "Button"];
 
-const TABLE_ROWS = [
-  {
-    name: "John Michael",
-  },
-  {
-    name: "Alexa Liras",
-  },
-  {
-    name: "Laurent Perrier",
-  },
-  {
-    name: "Michael Levi",
-  },
-  {
-    name: "Richard Gran",
-  },
-  {
-    name: "John Michael",
-  },
-  {
-    name: "Alexa Liras",
-  },
-  {
-    name: "Laurent Perrier",
-  },
-  {
-    name: "Michael Levi",
-  },
-  {
-    name: "Richard Gran",
-  },
-];
-
 export default function ChatList() {
-
   const [artistData, setArtistData] = useState([]);
   const getAllAdmin = async () => {
     const result = await axios.get(
       "http://localhost:8080/api/v1/admin/allUsers"
     );
     console.log(result.data.data);
-    setArtistData(result.data.data)
+    setArtistData(result.data.data);
   };
   useEffect(() => {
     getAllAdmin();
@@ -98,12 +65,21 @@ export default function ChatList() {
                       {username}
                     </Typography>
                   </td>
-                 
+
                   <td className="p-4">
-                <Typography as="a" href="#" variant="small" color="blue-gray" className="font-semibold  ">
-                <span className="border border-black py-1 px-3 bg-gray-700 text-white rounded-lg">Chat</span>
-                </Typography>
-              </td>
+                    <Typography
+                      as="span"
+                      variant="small"
+                      color="blue-gray"
+                      className="font-semibold"
+                    >
+                      <Link to="adminleeloop-connect">
+                        <span className="border border-black py-1 px-3 bg-gray-700 text-white rounded-lg">
+                          Chat
+                        </span>
+                      </Link>
+                    </Typography>
+                  </td>
                 </tr>
               ))}
             </tbody>

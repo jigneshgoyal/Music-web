@@ -94,7 +94,7 @@ function Setting() {
                     type="file"
                     hidden
                     name="profileImage"
-                    value={data.profileImage}
+                    // value={data.profileImage}
                     onChange={handleCoverImageChange}
                   />
                   <div className="flex w-40 h-9 px-2 flex-col bg-yellow-500 rounded-xl -translate-x-16 shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none border ">

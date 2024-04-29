@@ -45,7 +45,6 @@ const Upload = () => {
     console.log("Form Data :", formData)
 
     try {
-      console.log(`Bearer ${localStorage.getItem('token').trim()}`)
       const response = await axios.post(
         "http://localhost:8080/api/v1/music/upload",
         formData,

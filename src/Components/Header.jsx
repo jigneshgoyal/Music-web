@@ -5,7 +5,8 @@ import logo from "../image/logo1.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const Header = ({token, setTokenChanges}) => {
+
+const Header = ({ token, setTokenChanges }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -21,7 +22,7 @@ const Header = ({token, setTokenChanges}) => {
   };
 
   const logout = () => {
-    console.log("clicked")
+    console.log("clicked");
     localStorage.clear();
     setTokenChanges((prev) => !prev);
   };
@@ -37,21 +38,6 @@ const Header = ({token, setTokenChanges}) => {
             <li>
               <Link to="/" className="nav-link">
                 Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/sell" className="nav-link">
-                Sell Your Music
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" className="nav-link">
-                Artists Services
-              </Link>
-            </li>
-            <li>
-              <Link to="/pricing" className="nav-link">
-                Pricing
               </Link>
             </li>
             {token ? (
@@ -110,21 +96,7 @@ const Header = ({token, setTokenChanges}) => {
                 Home
               </Link>
             </li>
-            <li>
-              <Link to="/sell" className="nav-link" onClick={closeMenu}>
-                Sell Your Music
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" className="nav-link" onClick={closeMenu}>
-                Artists Services
-              </Link>
-            </li>
-            <li>
-              <Link to="/pricing" className="nav-link" onClick={closeMenu}>
-                Pricing
-              </Link>
-            </li>
+
             {token ? (
               <li>
                 <Link

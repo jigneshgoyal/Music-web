@@ -12,11 +12,12 @@ import { ToastContainer } from "react-toastify";
 import AdminDashboard from "./Pages/AdminDashboard";
 import ArtistList from "./Components/AdminDashboard/ArtistList";
 import MusicList from "./Components/AdminDashboard/MusicList";
-import ChatList from "./Components/AdminDashboard/ChatList";
 import PaymentGateway from "./Components/PaymentGateway";
 import Setting from "./Components/Dashbaord/Setting";
 import ViewPage from "./Components/AdminDashboard/ViewPage";
 import ChatPage from "./Pages/ChatPage";
+import AdminChatPage from "./Components/AdminDashboard/AdminChatPage";
+
 
 function PrivateRoute({ token, children }) {
   if (token === null) return <Navigate to={"/login"} replace />;
@@ -64,6 +65,7 @@ export default function App() {
     <>
       <BrowserRouter>
         <ToastContainer />
+
         <Header token={token} setTokenChanges={setTokenChanges} />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -73,9 +75,10 @@ export default function App() {
           />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/upload" element={<Uplaod />} />
+          
           <Route path="/viewpage" element={<ViewPage />} />
 
-          <Route path="/leeloop-connect" element={<ChatPage user={chat} />} />
+          {/* <Route path="/leeloop-connect" element={<ChatPage user={chat} />} /> */}
           <Route path="/paymentgateway" element={<PaymentGateway />} />
           <Route
             path="/dashboard"
@@ -99,10 +102,10 @@ export default function App() {
             }
           >
             <Route path="artist" element={<ArtistList />} />
-            <Route path="music" element={<MusicList />}>
-
+            <Route path="music" element={<MusicList />} />
+            <Route path="chat" element={<AdminChatPage />}>
+            
             </Route>
-            <Route path="chat" element={<ChatList />} />
           </Route>
         </Routes>
       </BrowserRouter>

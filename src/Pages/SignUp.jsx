@@ -16,8 +16,9 @@ function SignUp() {
 
   const onSubmit = async (data) => {
     try {
+      console.log(data)
       const result = await axios.post(
-        "http://localhost:8080/api/v1/user/register/",
+        "http://localhost:8080/api/v1/user/register",
         data
       );
 
