@@ -6,7 +6,7 @@ import axios from "axios";
 const Upload = () => {
   const [imageSrc, setImageSrc] = useState(music);
   const [isLeeloopChecked, setIsLeeloopChecked] = useState(false);
-  
+  const [loading, setLoading] = useState(false); // State to track loading
 
   const [formData, setFormData] = useState({
     title: "",
@@ -14,11 +14,10 @@ const Upload = () => {
     mainGenre: "",
     duration: "",
     musicMastering: false,
-    coverImageByLeeLoop: false,
+    coverImageByLeeLoop: false, // Initially set to false
   });
 
   const [musicFile, setMusicFile] = useState(null);
-  const [coverImage, setCoverImage] = useState(null);
   const [musicUploaded, setMusicUploaded] = useState(false); // State to track if music is uploaded
 
   const handleMusicFileChange = (e) => {
@@ -28,7 +27,6 @@ const Upload = () => {
   };
 
   const handleCoverImageChange = (e) => {
-    setCoverImage(e.target.files[0]);
     setFormData({ ...formData, coverImage: e.target.files[0] });
     const file = e.target.files[0];
     if (file) {
@@ -37,12 +35,20 @@ const Upload = () => {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "coverImageByLeeLoop" || e.target.name === "musicMastering") {
+      // If the cover image by Leeloop or music mastering checkbox is checked, set its value to true
+      setFormData({ ...formData, [e.target.name]: e.target.checked });
+      if (e.target.name === "coverImageByLeeLoop") {
+        setIsLeeloopChecked(e.target.checked);
+      }
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data :", formData)
+    setLoading(true); // Set loading to true when form is submitted
 
     try {
       const response = await axios.post(
@@ -51,29 +57,44 @@ const Upload = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            "Authorization": localStorage.getItem('token').trim()
+            Authorization: localStorage.getItem("token").trim(),
           },
         }
       );
       console.log(response);
-      if(response.status == 200){
-        alert("Music uploaded successfully")
-      }else {
-        alert("Something went wrong")
+      if (response.status === 200) {
+        alert("Music uploaded successfully");
+      } else {
+        alert("Something went wrong");
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setFormData({
+        title: "",
+        subTitle: "",
+        mainGenre: "",
+        duration: "",
+        musicMastering: false,
+        coverImageByLeeLoop: false,
+      });
+      setLoading(false); // Reset loading state regardless of success or failure
     }
   };
 
   return (
-    <div className="relative min-h-screen">
+    <div className={`relative min-h-screen ${loading ? "opacity-50 pointer-events-none" : ""}`}>
+      {loading && (
+        <div className="fixed inset-0 bg-black opacity-50 z-50 flex justify-center items-center">
+          <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-24 w-24"></div>
+        </div>
+      )}
       <img
         src="https://wallpapercave.com/wp/wp7033570.jpg"
         className="backdrop-blur-xl h-screen w-screen object-cover absolute z-0 "
         alt=""
       />
-      <form onSubmit={handleSubmit} >
+      <form onSubmit={handleSubmit}>
         <div className="relative z-10 bg-black bg-opacity-75 min-h-screen flex flex-col justify-center items-center">
           <div className="bg-gradient-to-r from-orange-200 to-fuchsia-400 rounded-lg p-8 mt-8 flex flex-col md:flex-row shadow-lg">
             <div className="mb-8 md:mr-20 md:mb-0">
@@ -168,9 +189,10 @@ const Upload = () => {
                   <input
                     type="checkbox"
                     name="coverImageByLeeLoop"
+                    value={formData.coverImageByLeeLoop}
                     className="mr-2 text-red-500 focus:ring-red-500"
                     checked={isLeeloopChecked}
-                    onChange={(e) => setIsLeeloopChecked(e.target.checked)}
+                    onChange={handleChange}
                   />
                   <label className="text-white mr-4 text-xl" htmlFor="">
                     Upload cover by Leeloop
@@ -180,6 +202,7 @@ const Upload = () => {
                   <input
                     type="checkbox"
                     name="musicMastering"
+                    value={formData.musicMastering}
                     className="mr-2 text-red-500 focus:ring-red-500"
                     onChange={handleChange}
                   />

@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@material-tailwind/react": "^2.1.9",
+    "@mui/material": "^5.15.15",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "aos": "^2.3.4",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
@@ -27,7 +29,8 @@
     "react-icons": "^5.1.0",
     "react-router-dom": "^6.22.3",
     "react-toastify": "^10.0.5",
-    "semantic-ui-react": "^2.1.5"
+    "semantic-ui-react": "^2.1.5",
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

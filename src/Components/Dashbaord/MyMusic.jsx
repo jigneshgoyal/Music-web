@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
-const MyMusic = () => {
+export default function MyMusic () {
   const [activeTab, setActiveTab] = useState("all");
   const [music, setMusic] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -61,13 +61,23 @@ const MyMusic = () => {
           </button>
           <button
             className={`px-4 py-2 rounded-md ${
-              activeTab === "waiting"
+              activeTab === "awaiting"
                 ? "bg-slate-500 text-black"
                 : "bg-transparent hover:bg-slate-800 hover:text-white   "
             }`}
-            onClick={() => handleTabClick("waiting")}
+            onClick={() => handleTabClick("awaiting")}
           >
-            waiting
+            Awaiting
+          </button>
+          <button
+            className={`px-4 py-2 rounded-md ${
+              activeTab === "pending"
+                ? "bg-slate-500 text-black"
+                : "bg-transparent hover:bg-slate-800 hover:text-white   "
+            }`}
+            onClick={() => handleTabClick("pending")}
+          >
+            Pending
           </button>
         </div>
         <table className="w-full  table-fixed text-center m-3 border border-gray-500 rounded-lg ">
@@ -76,7 +86,7 @@ const MyMusic = () => {
               <th className="px-2 py-1">Name</th>
               <th className="px-2 py-1">Duration</th>
               <th className="px-2 py-1">Status</th>
-              <th className="px-2 py-1">view</th>
+              <th className="px-2 py-1">View</th>
             </tr>
           </thead>
           <tbody>
@@ -214,4 +224,4 @@ const MyMusic = () => {
   );
 };
 
-export default MyMusic;
+

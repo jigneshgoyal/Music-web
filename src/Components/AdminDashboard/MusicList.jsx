@@ -18,7 +18,7 @@ export default function MusicList() {
   const handleOpen = () => setOpen((cur) => !cur);
   const [showModal, setShowModal] = useState(false);
   const [musicData, setMusicData] = useState([]);
-  const options = ["Released", "Pending", "Await", "Requested"];
+  const options = ["Released", "Pending", "Awaiting", "Requested"];
   const [formData, setFormData] = useState({});
   const [currentSong, setCurrentSong] = useState({});
 
@@ -39,13 +39,13 @@ export default function MusicList() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormData({...formData, id:currentSong._id})
+    setFormData({ ...formData, id: currentSong._id });
     console.log("Form Data :", formData);
 
     try {
       const response = await axios.post(
         "http://localhost:8080/api/v1/admin/updateMusic",
-        {...formData, id:currentSong._id},
+        { ...formData, id: currentSong._id },
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -56,10 +56,10 @@ export default function MusicList() {
       console.log(response);
       if (response.status == 200) {
         alert("Details updated successfully");
-        setOpen(false)
-        setShowModal(false)
-        getAllMusic()
-        setCurrentSong({})
+        setOpen(false);
+        setShowModal(false);
+        getAllMusic();
+        setCurrentSong({});
       } else {
         alert("Something went wrong");
       }
@@ -69,11 +69,11 @@ export default function MusicList() {
   };
 
   useEffect(() => {
-    if (Object.keys(currentSong).length !== 0){
-      console.log("Getting True at First", currentSong)
+    if (Object.keys(currentSong).length !== 0) {
+      console.log("Getting True at First", currentSong);
       setShowModal(true);
-    }else{
-      console.log("Else Part")
+    } else {
+      console.log("Else Part");
     }
   }, [currentSong]);
 
@@ -90,7 +90,7 @@ export default function MusicList() {
           open={open}
           setCurrentSong={setCurrentSong}
         />
-      ) }
+      )}
       <div className="bg-black text-white min-h-fit">
         <div className="container mx-auto py-[35px]">
           <h1 className="text-4xl font-bold mb-8 text-center text-white">
@@ -191,12 +191,19 @@ const SongModel = (props) => {
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             <div className="bg-black text-white min-h-screen flex flex-col">
               <main className="p-8">
-                <div className="p-3 flex flex-col items-center justify-center ">
+                <div className=" flex flex-col items-center justify-center ">
                   <img
                     src={song.coverImage}
                     alt="Music Cover"
                     className="w-40 h-40 rounded-lg shadow-lg p-3 text-center"
                   />
+                  <a
+                    href={song.coverImage}
+                    download="music_cover.jpg"
+                    className="bg-yellow-500 p-1 m-1  rounded"
+                  >
+                    Download Image
+                  </a>
                   <audio
                     controls
                     src={song.musicFile}
