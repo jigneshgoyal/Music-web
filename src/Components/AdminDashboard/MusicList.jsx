@@ -155,7 +155,6 @@ export default function MusicList() {
                           type="button"
                           onClick={() => {
                             setCurrentSong(song);
-                            // setShowModal(prev => !prev)
                           }}
                         >
                           View
@@ -186,10 +185,10 @@ const SongModel = (props) => {
   } = props;
   return (
     <>
-      <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+      <div className="flex justify-center m-0 items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className="relative w-auto my-6 mx-auto max-w-3xl">
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-            <div className="bg-black text-white min-h-screen flex flex-col">
+            <div className="bg-gray-800 text-white min-h-screen flex flex-col">
               <main className="p-8">
                 <div className=" flex flex-col items-center justify-center ">
                   <img
@@ -257,7 +256,7 @@ const SongModel = (props) => {
                   </div>
                 </div>
               </main>
-              <div>
+              <div className="text-center">
                 <button
                   className="text-center bg-red-500 p-1 px-3 mx-3 rounded-lg"
                   onClick={() => {
