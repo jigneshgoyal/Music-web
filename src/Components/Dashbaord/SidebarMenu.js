@@ -24,7 +24,7 @@ const SidebarMenu = [
     id: 4,
     icon: UserIcon,
     path: "/dashboard/leeloop-connect",
-    title: "Chatting",
+    title: "Connect",
   },
 ];
 

@@ -7,6 +7,7 @@ const Upload = () => {
   const [imageSrc, setImageSrc] = useState(music);
   const [isLeeloopChecked, setIsLeeloopChecked] = useState(false);
   const [loading, setLoading] = useState(false); // State to track loading
+  const [agreedToTerms, setAgreedToTerms] = useState(false); // State to track if user agreed to terms
 
   const [formData, setFormData] = useState({
     title: "",
@@ -14,7 +15,7 @@ const Upload = () => {
     mainGenre: "",
     duration: "",
     musicMastering: false,
-    coverImageByLeeLoop: false, // Initially set to false
+    coverImageByLeeLoop: false,
   });
 
   const [musicFile, setMusicFile] = useState(null);
@@ -36,11 +37,12 @@ const Upload = () => {
 
   const handleChange = (e) => {
     if (e.target.name === "coverImageByLeeLoop" || e.target.name === "musicMastering") {
-      // If the cover image by Leeloop or music mastering checkbox is checked, set its value to true
       setFormData({ ...formData, [e.target.name]: e.target.checked });
       if (e.target.name === "coverImageByLeeLoop") {
         setIsLeeloopChecked(e.target.checked);
       }
+    } else if (e.target.name === "termsAgreement") {
+      setAgreedToTerms(e.target.checked); // Update agreedToTerms state based on checkbox value
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -185,7 +187,7 @@ const Upload = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <div className="">
+                <div>
                   <input
                     type="checkbox"
                     name="coverImageByLeeLoop"
@@ -194,11 +196,11 @@ const Upload = () => {
                     checked={isLeeloopChecked}
                     onChange={handleChange}
                   />
-                  <label className="text-white mr-4 text-xl" htmlFor="">
-                    Upload cover by Leeloop
+                  <label className="text-white" htmlFor="">
+                    Upload cover by Leeloop at 5 CHF
                   </label>
                 </div>
-                <div className="mb-3">
+                <div>
                   <input
                     type="checkbox"
                     name="musicMastering"
@@ -206,17 +208,29 @@ const Upload = () => {
                     className="mr-2 text-red-500 focus:ring-red-500"
                     onChange={handleChange}
                   />
-                  <label className="text-white text-xl" htmlFor="">
-                    Music Mastering
+                  <label className="text-white" htmlFor="">
+                    Music Mastering at 5 CHF
+                  </label>
+                </div>
+                <div className="mb-3">
+                  <input
+                    type="checkbox"
+                    name="termsAgreement"
+                    className="mr-2 text-red-500 focus:ring-red-500"
+                    checked={agreedToTerms}
+                    onChange={handleChange}
+                  />
+                  <label className="text-white" htmlFor="">
+                    I agree LeeLoop Media <a href="/termsAndCondition" className="text-black">-General terms</a>
                   </label>
                 </div>
               </div>
               <div className="text-center mt-4">
                 <button
                   className={`bg-black border-2 border-red-500 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ${
-                    !musicFile ? "opacity-50 cursor-not-allowed" : ""
+                    !musicFile || !agreedToTerms ? "opacity-50 cursor-not-allowed" : ""
                   }`}
-                  disabled={!musicFile}
+                  disabled={!musicFile || !agreedToTerms}
                 >
                   <svg
                     className="inline-block h-6 w-6 mr-2"

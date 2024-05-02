@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useNavigator } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -7,6 +7,7 @@ export default function MyMusic() {
   const [music, setMusic] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentSong, setCurrentSong] = useState({});
+  const navigate = useNavigator
 
   const getProfileDetail = async () => {
     const response = await axios.get(
@@ -31,12 +32,19 @@ export default function MyMusic() {
 
   useEffect(() => {
     if (Object.keys(currentSong).length !== 0) {
-      console.log("Getting True at First", currentSong);
       setShowModal(true);
-    } else {
-      console.log("Else Part");
     }
   }, [currentSong]);
+
+  function confirmAction() {
+    let confirmAction = confirm("Are you sure to delete this song? You have to pay 120 CHF for that");
+    if (confirmAction) {
+      alert("Action successfully executed");
+    } else {
+      // alert("Action canceled");
+      navigate('dashboard/mymusic')
+    }
+  }
 
   return (
     <>
@@ -97,6 +105,7 @@ export default function MyMusic() {
                 <th className="px-2 py-1">Duration</th>
                 <th className="px-2 py-1">Status</th>
                 <th className="px-2 py-1">View</th>
+                <th className="px-2 py-1">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -141,6 +150,21 @@ export default function MyMusic() {
                           }}
                         >
                           View
+                        </button>
+                      </>
+                    </td>
+                    <td className="p-4">
+                      <>
+                        <button
+                          className="bg-red-500 text-black active:bg-blue-500 
+                        font-bold px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                          type="button"
+                          onClick={() => {
+                            confirmAction()
+                            
+                          }}
+                        >
+                          Delete
                         </button>
                       </>
                     </td>

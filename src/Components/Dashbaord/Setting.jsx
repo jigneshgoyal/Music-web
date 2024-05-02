@@ -86,7 +86,7 @@ function Setting() {
                 src={imageSrc}
                 alt="NA"
                 id="newImg"
-                className="w-24 h-24 bg-white rounded-full overflow-hidden mr-4 -translate-x-14"
+                className="w-24 h-24 bg-white rounded-lg overflow-hidden mr-4 -translate-x-14"
               />
               <div>
                 <label>
