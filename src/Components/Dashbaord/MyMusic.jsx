@@ -11,15 +11,12 @@ export default function MyMusic() {
   const navigate = useNavigator;
 
   const getProfileDetail = async () => {
-    const response = await axios.get(
-      `${baseUrl}/api/v1/user/allDetails`,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: localStorage.getItem("token").trim(),
-        },
-      }
-    );
+    const response = await axios.get(`${baseUrl}/api/v1/user/allDetails`, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: localStorage.getItem("token").trim(),
+      },
+    });
     console.log(response.data.data.uploadedMusic);
     setMusic(response.data.data.uploadedMusic);
   };
@@ -37,17 +34,18 @@ export default function MyMusic() {
     }
   }, [currentSong]);
 
-  const confirmAction = async (id) => {
+  const confirmAction = async (musicId) => {
     let confirmAction = confirm(
       "Are you sure to delete this song? You have to pay 120 CHF for that"
     );
-    console.log("object")
+    console.log("object");
     if (confirmAction) {
-      console.log("object 2" )
-      console.log(id)
+      console.log("object 2");
+      console.log(musicId);
       try {
         const response = await axios.delete(
-          `http://localhost:8080/api/v1/music/deleteById/${id}`,
+          `http://localhost:8080/api/v1/music/deleteById`,
+          musicId,
           {
             headers: {
               "Content-Type": "multipart/form-data",
