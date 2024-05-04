@@ -5,7 +5,7 @@ const SideBarItem = ({ item, active }) => {
   return (
     <Link
       to={item.path}
-      className={`sidebar-item flex items-center justify-center py-4 ${
+      className={`sidebar-item flex items-start pl-16 py-4 ${
         active ? 'bg-slate-800' : 'hover:bg-gray-950'
       }`}
     >
