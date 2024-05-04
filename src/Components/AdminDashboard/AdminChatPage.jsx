@@ -4,9 +4,9 @@ const AdminChatPage = (props) => {
   return ( 
     <div style={{ height: "88vh", width: "85vw" }}> 
       <PrettyChatWindow 
-       projectID='ccea5a6a-6bcf-450f-bb8d-47323ab25244'
-       userName='admin'
-       userSecret='123456'
+        projectId="b4245e12-2d4e-4f58-8d1d-18b311cc49f1"
+        username="admin"
+        secret="123456"
         style={{ height: "100%" }} 
       /> 
     </div> 

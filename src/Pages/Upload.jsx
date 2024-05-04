@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import music from "../image/music.jpg";
 import "../App.css";
 import axios from "axios";
+import { baseUrl } from "../constant";
 
 const Upload = () => {
   const [imageSrc, setImageSrc] = useState(music);
@@ -54,7 +55,7 @@ const Upload = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/music/upload",
+        `${baseUrl}/api/v1/music/upload`,
         formData,
         {
           headers: {

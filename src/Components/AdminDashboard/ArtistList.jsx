@@ -1,6 +1,7 @@
 import { Card, Typography } from "@material-tailwind/react";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { baseUrl } from "../../constant";
 
 const TABLE_HEAD = ["S.No.", "Name", "Email", "Address"];
 
@@ -8,7 +9,7 @@ export default function ArtistList() {
   const [adminData, setAdminData] = useState([]);
   const getAllAdmin = async () => {
     const result = await axios.get(
-      "http://localhost:8080/api/v1/admin/allUsers"
+      `${baseUrl}/api/v1/admin/allUsers`
     );
     console.log(result.data.data);
     setAdminData(result.data.data)

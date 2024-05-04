@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { useRef } from "react";
 import { toast } from "react-toastify";
+import { baseUrl } from "../constant";
 function SignUp() {
   const {
     register,
@@ -18,7 +19,7 @@ function SignUp() {
     try {
       console.log(data)
       const result = await axios.post(
-        "http://localhost:8080/api/v1/user/register",
+        `${baseUrl}/v1/user/register`,
         data
       );
 

@@ -1,23 +1,33 @@
 import React, { useEffect } from "react";
+// import { useNavigator } from "react-router-dom";
 import leeloop from "../image/leeloop-connect.png";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { baseUrl } from "../constant";
 
-function CheckChatPage() {
+function CheckChatPage(userId) {
+  const navigate = useNavigate();
   const chatSignup = async () => {
+    console.log(userId)
     const response = await axios.post(
-      "http://localhost:8080/api/v1/chat/signup",
-      {
-        headers: {
-          Authorization: localStorage.getItem("token").trim(),
-        },
-      }
+      `/${baseUrl}api/v1/chat/signup`,
+      // "http://localhost:8080/api/v1/chat/signup",
+      userId,
+      // {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //     Authorization: localStorage.getItem("token"),
+      //   },
+      // }
     );
-    console.log(response)
-  };
+    console.log(response);
+    alert("Successfully Registered")
+    navigate("/")
 
+  };
   useEffect(() => {
-    console.log(localStorage.getItem("token"))
-  })
+    console.log(localStorage.getItem("token"));
+  });
 
   return (
     <div className="bg-[#141414]">

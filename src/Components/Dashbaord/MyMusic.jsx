@@ -1,6 +1,7 @@
 import React, { useState, useNavigator } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { baseUrl } from "../../constant";
 
 export default function MyMusic() {
   const [activeTab, setActiveTab] = useState("all");
@@ -11,7 +12,7 @@ export default function MyMusic() {
 
   const getProfileDetail = async () => {
     const response = await axios.get(
-      `http://localhost:8080/api/v1/user/allDetails`,
+      `${baseUrl}/api/v1/user/allDetails`,
       {
         headers: {
           "Content-Type": "multipart/form-data",

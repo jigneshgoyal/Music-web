@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import {Link} from 'react-router-dom'
+import { baseUrl } from "../../constant";
 
 const Profile = () => {
   const [profileDetail, setProfileDetail] = useState({});
 
   const getProfileDetail = async () => {
     const response = await axios.get(
-      `http://localhost:8080/api/v1/user/allDetails`,
+      `${baseUrl}/api/v1/user/allDetails`,
       {
         headers: {
           "Content-Type": "multipart/form-data",

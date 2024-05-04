@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
+import { baseUrl } from "../constant";
 
 function Login(props) {
   const {
@@ -24,7 +25,7 @@ function Login(props) {
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:8080/api/v1/user/login",
+          `${baseUrl}/api/v1/user/login`,
           data
         );
         if (response.status === 200) {

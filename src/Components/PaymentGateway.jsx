@@ -14,7 +14,6 @@ const PaymentGateway = () => {
   const expiryYears = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() + i);
 
   const handlePayment = () => {
-  
     console.log('Payment processing...');
   };
 

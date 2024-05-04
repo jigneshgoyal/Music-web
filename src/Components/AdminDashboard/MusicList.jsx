@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
+import { baseUrl } from "../../constant";
 
 export default function MusicList() {
   const [open, setOpen] = React.useState(false);
@@ -22,7 +23,7 @@ export default function MusicList() {
 
   const getAllMusic = async () => {
     const result = await axios.get(
-      "http://localhost:8080/api/v1/admin/allMusic"
+      `${baseUrl}/api/v1/admin/allMusic`
     );
     console.log(result.data.data);
     setMusicData(result.data.data);
@@ -42,12 +43,12 @@ export default function MusicList() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/admin/updateMusic",
+        `${baseUrl}/api/v1/admin/updateMusic`,
         { ...formData, id: currentSong._id },
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: localStorage.getItem("token").trim(),
+            Authorization: localStorage.getItem("adminEmail").trim(),
           },
         }
       );

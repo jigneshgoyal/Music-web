@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../../constant";
 
 function Setting() {
   const [data, setData] = useState({});
@@ -10,7 +11,7 @@ function Setting() {
 
   const getProfileDetail = async () => {
     const response = await axios.get(
-      `http://localhost:8080/api/v1/user/allDetails`,
+      `${baseUrl}/api/v1/user/allDetails`,
       {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -45,7 +46,7 @@ function Setting() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/user/updateUserDetails",
+        `${baseUrl}/api/v1/user/updateUserDetails`,
         formData,
         {
           headers: {

@@ -2,6 +2,7 @@ import { Card, Typography } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../../constant";
 
 const TABLE_HEAD = ["S.No.", "Artist Name", "Button"];
 
@@ -9,7 +10,7 @@ export default function ChatList() {
   const [artistData, setArtistData] = useState([]);
   const getAllAdmin = async () => {
     const result = await axios.get(
-      "http://localhost:8080/api/v1/admin/allUsers"
+      `${baseUrl}/api/v1/admin/allUsers`
     );
     console.log(result.data.data);
     setArtistData(result.data.data);
