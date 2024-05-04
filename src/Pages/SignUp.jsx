@@ -19,7 +19,7 @@ function SignUp() {
     try {
       console.log(data)
       const result = await axios.post(
-        `${baseUrl}/v1/user/register`,
+        `${baseUrl}/api/v1/user/register`,
         data
       );
 
