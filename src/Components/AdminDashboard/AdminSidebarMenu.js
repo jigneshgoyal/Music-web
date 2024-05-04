@@ -1,5 +1,6 @@
 import UserIcon from '../../image/user.svg';
 import MusicIcon from '../../image/music2.png';
+import ChatIcon from '../../image/chatIcon.png'
 
 const AdminSidebarMenu = [ 
      {
@@ -16,7 +17,7 @@ const AdminSidebarMenu = [
     },
     {
         id: 3,
-        icon: MusicIcon,
+        icon: ChatIcon,
         path: '/admindashboard/chat',
         title: 'Chat',
     },

@@ -1,5 +1,7 @@
 import UserIcon from "../../image/user.svg";
 import MusicIcon from "../../image/music2.png";
+import SettingIcon from "../../image/settings.png"
+import ChatIcon from '../../image/chatIcon.png'
 
 const SidebarMenu = [
   {
@@ -16,13 +18,13 @@ const SidebarMenu = [
   },
   {
     id: 3,
-    icon: MusicIcon,
+    icon: SettingIcon,
     path: "/dashboard/setting",
     title: "Setting",
   },
   {
     id: 4,
-    icon: UserIcon,
+    icon: ChatIcon,
     path: "/dashboard/leeloop-connect",
     title: "Connect",
   },
