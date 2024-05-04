@@ -6,7 +6,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 
-const Header = ({ token, setTokenChanges }) => {
+const Header = ({ token, setTokenChanges, adminEmail, setAdminEmailChange }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -24,7 +24,8 @@ const Header = ({ token, setTokenChanges }) => {
   const logout = () => {
     console.log("clicked");
     localStorage.clear();
-    setTokenChanges((prev) => !prev);
+    setTokenChanges(prev => !prev);
+    setAdminEmailChange(prev => !prev);
   };
 
   return (
@@ -40,21 +41,31 @@ const Header = ({ token, setTokenChanges }) => {
                 Home
               </Link>
             </li>
-            {token ? (
+            {(token || adminEmail) ? (
               <>
                 <li>
                   <button className="nav-link" onClick={logout}>
                     Logout
                   </button>
                 </li>
-                <li>
+                {(adminEmail && !token) ? (
+                  <li>
+                    <Link
+                    to="/admindashboard/artist"
+                    className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
+                  >
+                    Admin Dashboard
+                  </Link>
+                  </li>
+                ): (<li>
                   <Link
                     to="/dashboard/profile"
                     className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
                   >
                     Dashboard
                   </Link>
-                </li>
+                </li>)}
+                
               </>
             ) : (
               <>
@@ -97,16 +108,36 @@ const Header = ({ token, setTokenChanges }) => {
               </Link>
             </li>
 
-            {token ? (
-              <li>
-                <Link
-                  to="/dashboard/profile"
-                  className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
-                  onClick={closeMenu}
-                >
-                  Dashboard
-                </Link>
-              </li>
+            {(token || adminEmail) ? (
+              <>
+               <li>
+                  <button className="nav-link" onClick={logout}>
+                    Logout
+                  </button>
+                </li>
+               
+                {(adminEmail && !token) ? (
+                   <li>
+                   <Link
+                     to="/admindashboard/artist"
+                     className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
+                     onClick={closeMenu}
+                   >
+                     Admin Dashboard
+                   </Link>
+                 </li>
+                ):(
+                  <li>
+                  <Link
+                    to="/dashboard/profile"
+                    className="nav-link bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
+                    onClick={closeMenu}
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                )}
+              </>
             ) : (
               <>
                 <li>

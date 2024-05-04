@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 function Login(props) {
   const {
@@ -12,29 +12,32 @@ function Login(props) {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { setTokenChanges } = props;
+  const { setTokenChanges, setAdminEmailChange } = props;
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/user/login",
-        data
-      );
-
-      if (response.status === 200) {
-        toast.success("Login Successfully");
-        navigate("/");
-        const token = response.data.token;
-        localStorage.setItem("token", token);
-        Cookies.set("token", token);
-        // setTokenChanges(token)
-       
-        setTokenChanges((prev) => !prev);
+    if (data.email == "admin@gmail.com" && data.password == "123456") {
+      localStorage.setItem("adminEmail", data.email)
+      toast.success("Admin Login Successfully");
+      navigate("/")
+      setAdminEmailChange((prev) => !prev);
+    } else {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/v1/user/login",
+          data
+        );
+        if (response.status === 200) {
+          toast.success("Login Successfully");
+          navigate("/");
+          const token = response.data.token;
+          localStorage.setItem("token", token);
+          Cookies.set("token", token);
+          setTokenChanges((prev) => !prev);
+        }
+      } catch (error) {
+        toast.error("Please login with correct ID and Password");
       }
-    } catch (error) {
-      toast.error("Please login with correct ID and Password");
     }
   };
 

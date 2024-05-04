@@ -11,8 +11,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
 
-const TABLE_HEAD = ["S.No.", "Artist Name", "Music Title", "Button"];
-
 export default function MusicList() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -91,62 +89,48 @@ export default function MusicList() {
           setCurrentSong={setCurrentSong}
         />
       )}
-      <div className="bg-black text-white min-h-fit">
-        <div className="container mx-auto py-[35px]">
+   
+       <div className="bg-black text-white min-h-screen">
+        <div className="container mx-auto py-8">
           <h1 className="text-4xl font-bold mb-8 text-center text-white">
-            Music List
+            My Music
           </h1>
+         
+          <table className="w-full  table-fixed text-center m-3 border border-gray-500 rounded-lg ">
+            <thead>
+              <tr className="bg-gray-500 text-black">
+              <th className="px-16 py-1 text-left">S.No.</th>
+                <th className="px-2 py-1">Name</th>
+                <th className="px-2 py-1">Artist Name</th>
+                <th className="px-2 py-1">Duration</th>
+                <th className="px-2 py-1">View</th>
 
-          <Card className="h-[500px] w-full overflow-scroll bg-gray-800">
-            <table className="w-full min-w-max table-auto text-center text-white">
-              <thead>
-                <tr>
-                  {TABLE_HEAD.map((head) => (
-                    <th
-                      key={head}
-                      className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 "
-                    >
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-bold leading-none "
-                      >
-                        {head}
-                      </Typography>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {musicData.map((song, id) => (
-                  <tr key={song._id} className="even:bg-blue-gray-50/50">
-                    <td className="p-4">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-semibold"
-                      >
-                        {id + 1}
-                      </Typography>
+              </tr>
+            </thead>
+            <tbody>
+              {musicData.map((song, index) => (
+                  <tr key={index} className="border-b border-gray-600">
+                    <td className="px-16 py-1 text-left">{index + 1}</td>
+                    <td className="px-2 py-1">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 bg-white rounded-md overflow-hidden mr-4">
+                          <img
+                            src={song.coverImage}
+                            alt="Profile"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h2 className="text-xl font-semibold">
+                            {song.title}
+                          </h2>
+                          <p>{song.subTitle}</p>
+                        </div>
+                      </div>
                     </td>
-                    <td className="p-4">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-semibold"
-                      >
-                        {song.artist?.username}
-                      </Typography>
-                    </td>
-                    <td className="p-4">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-semibold"
-                      >
-                        {song.title}
-                      </Typography>
-                    </td>
+                    <td className="px-2 py-1">{song.artist?.username}</td>
+                    <td className="px-2 py-1">{song.duration} Seconds</td>
+
                     <td className="p-4">
                       <>
                         <button
@@ -155,17 +139,18 @@ export default function MusicList() {
                           type="button"
                           onClick={() => {
                             setCurrentSong(song);
+                            
                           }}
                         >
                           View
                         </button>
                       </>
                     </td>
+                    
                   </tr>
                 ))}
-              </tbody>
-            </table>
-          </Card>
+            </tbody>
+          </table>
         </div>
       </div>
     </>

@@ -7,7 +7,7 @@ export default function MyMusic() {
   const [music, setMusic] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentSong, setCurrentSong] = useState({});
-  const navigate = useNavigator
+  const navigate = useNavigator;
 
   const getProfileDetail = async () => {
     const response = await axios.get(
@@ -36,15 +36,36 @@ export default function MyMusic() {
     }
   }, [currentSong]);
 
-  function confirmAction() {
-    let confirmAction = confirm("Are you sure to delete this song? You have to pay 120 CHF for that");
+  const confirmAction = async (id) => {
+    let confirmAction = confirm(
+      "Are you sure to delete this song? You have to pay 120 CHF for that"
+    );
+    console.log("object")
     if (confirmAction) {
-      alert("Action successfully executed");
+      console.log("object 2" )
+      console.log(id)
+      try {
+        const response = await axios.delete(
+          `http://localhost:8080/api/v1/music/deleteById/${id}`,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: localStorage.getItem("token").trim(),
+            },
+          }
+        );
+        console.log(response);
+        if (response.status == 200) {
+          alert("Music Deleted Successfully");
+        }
+      } catch (error) {
+        alert("Something went wrong");
+      }
     } else {
       // alert("Action canceled");
-      navigate('dashboard/mymusic')
+      navigate("dashboard/mymusic");
     }
-  }
+  };
 
   return (
     <>
@@ -136,7 +157,7 @@ export default function MyMusic() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-2 py-1">{song.duration}</td>
+                    <td className="px-2 py-1">{song.duration} Seconds</td>
                     <td className="px-2 py-1">{song.status}</td>
                     <td className="p-4">
                       <>
@@ -146,7 +167,6 @@ export default function MyMusic() {
                           type="button"
                           onClick={() => {
                             setCurrentSong(song);
-                            
                           }}
                         >
                           View
@@ -160,8 +180,7 @@ export default function MyMusic() {
                         font-bold px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                           type="button"
                           onClick={() => {
-                            confirmAction()
-                            
+                            confirmAction(song._id);
                           }}
                         >
                           Delete
@@ -255,4 +274,3 @@ const SongModel = (props) => {
     </div>
   );
 };
-
