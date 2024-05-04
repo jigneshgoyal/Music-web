@@ -43,8 +43,8 @@ export default function MyMusic() {
       console.log("object 2");
       console.log(musicId);
       try {
-        const response = await axios.delete(
-          `http://localhost:8080/api/v1/music/deleteById`,
+        const response = await axios.post(
+          `${baseUrl}/api/v1/music/deleteById`,
           musicId,
           {
             headers: {
@@ -61,7 +61,6 @@ export default function MyMusic() {
         alert("Something went wrong");
       }
     } else {
-      // alert("Action canceled");
       navigate("dashboard/mymusic");
     }
   };
