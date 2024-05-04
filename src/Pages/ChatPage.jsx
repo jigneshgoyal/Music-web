@@ -9,14 +9,13 @@ function ChatPage() {
   const [chatvalid, setChatValid] = useState(false);
 
   const getChatData = async () => {
-    const response = await axios.get("http://localhost:8080/api/v1/chat/", {
+    const response = await axios.post("http://localhost:8080/api/v1/chat/login", {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: localStorage.getItem("token").trim(),
       },
     });
-    setUsername(response.data.data.username);
-    setSecret(response.data.data.secret);
+    console.log(response)
   };
 
   const getData = async () => {
@@ -44,10 +43,9 @@ function ChatPage() {
       {chatvalid ? (
         <div className="bg-gray-300">
           <PrettyChatWindow
-            projectID="b4245e12-2d4e-4f58-8d1d-18b311cc49f1"
-            userName={username}
-            userSecret={username}
-            // Render Custom Components
+            projectID="ccea5a6a-6bcf-450f-bb8d-47323ab25244"
+            userName="jignesh"
+            userSecret="123456"
             height="88vh"
           />
         </div>
